@@ -236,12 +236,13 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   not change the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-6">assigned access key</a> unless the <code id="processing-model-7:the-accesskey-attribute-4"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute is changed or the element is moved to
   another <code id="processing-model-7:document"><a href="dom.html#document">Document</a></code>.</p>
 
-  <p>When the user presses the key combination or otherwise triggers the shortcut corresponding to the <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned access key</a>
-  for an element, if the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the
+  <p>When the user triggers the shortcut behaviour corresponding to the <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned access key</a>
+  for an element, for example by pressing a shortcut key or key combination, if the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the
   command's <a href="semantics.html#command-facet-hiddenstate" id="processing-model-7:command-facet-hiddenstate">Hidden State</a> facet is false (visible),
   the command's <a href="semantics.html#command-facet-disabledstate" id="processing-model-7:command-facet-disabledstate">Disabled State</a> facet is also false
   (enabled), the element is <a href="infrastructure.html#in-a-document" id="processing-model-7:in-a-document">in a <code>Document</code></a> that has an associated
-  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command. Otherwise the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned accesskey.</p>
+  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
+  <p>Otherwise, if the element is "active" the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned accesskey.</p>
 
   <p class="note">User agents <a href="semantics.html#expose-commands-in-ui">might expose</a> elements that have
   an <code id="processing-model-7:the-accesskey-attribute-5"><a href="#the-accesskey-attribute">accesskey</a></code> attribute in other ways as well, e.g. in a menu
@@ -260,7 +261,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
     <section class='appendix' id="acknowledgements">
       <h2>Acknowledgements</h2>
       <p>Many thanks to Robin Berjon for making our lives so much easier with his cool tool Respec.</p>
-      <p>Many thanks to John Foliot, Jukka Korpela, Deborah Kaplan, Dominic Mezzoni, and many others for direct contributions to this.</p>
+      <p>This is a piece of work that has developed over almost two decades, and a great many people have made important contributions. The people who worked on the original <code>accesskey</code> specification in HTML 4, the <code>access</code> element proposed for XHTML2, Deborah Kaplan, Dominic Mezzoni, Earl Johnson, Ian Hickson, John Foliot, Jukka Korpela, Simon Peters, and many others - some of whom should have been mentioned - for direct contributions to this work.</p>
     </section>
   </body>
 </html>
