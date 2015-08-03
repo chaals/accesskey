@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>This Is The Name Of Your Specification</title>
+    <title>Accesskey replacement proposal</title>
     <meta charset='utf-8'>
     <script src='https://www.w3.org/Tools/respec/respec-w3c-common'
             async class='remove'></script>
     <script class='remove'>
       var respecConfig = {
+
+	  noTOC: "true",
           // specification status (e.g. WD, LCWD, WG-NOTE, etc.). If in doubt use ED.
-          specStatus:           "ED",
+          specStatus:           "unofficial",
           
           // the specification's short name, as in http://www.w3.org/TR/short-name/
-          shortName:            "xxx-xxx",
-
-          // if your specification has a subtitle that goes below the main
-          // formal title, define it here
-          // subtitle   :  "an excellent document",
+          // shortName:            "xxx-xxx",
 
           // if you wish the publication date to be other than the last modification, set this
           // publishDate:  "2009-08-06",
@@ -24,26 +22,22 @@
           // the start date here:
           // copyrightStart: "2005"
 
-          // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
-          // and its maturity status
           // previousPublishDate:  "1977-03-15",
           // previousMaturity:  "WD",
 
           // if there a publicly available Editor's Draft, this is the link
-          // edDraftURI:           "http://berjon.com/",
+          edDraftURI:           "http://chaals.github.io/accesskey/index.src.html",
 
-          // if this is a LCWD, uncomment and set the end of its review period
-          // lcEnd: "2009-08-05",
 
           // editors, add as many as you like
           // only "name" is required
           editors:  [
               {
-                  name:       "Your Name"
-              ,   url:        "http://example.org/"
-              ,   mailto:     "you@example.org"
-              ,   company:    "Your Company"
-              ,   companyURL: "http://example.com/"
+                  name:       "Chaals"
+          //  ,   url:        "http://yandex.com/"
+          //  ,   mailto:     "chaals@yandex-team.com"
+              ,   company:    "Yandex / Яндекс"
+              ,   companyURL: "http://yandex.com/"
               },
           ],
           
@@ -54,7 +48,7 @@
           wgURI:        "http://example.org/really-cool-wg",
           
           // name (without the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "spec-writers-anonymous",
+          wgPublicList: "public-html-a11y",
           
           // URI of the patent status for this WG, for Rec-track documents
           // !!!! IMPORTANT !!!!
@@ -68,30 +62,213 @@
   </head>
   <body>
     <section id='abstract'>
-      <p>
-        This is the abstract for your specification.
-      </p>
+      <p>This document proposes a replacement specification of the HTML accesskey attribute, to enable important use cases and solve important bugs.</p>
     </section>
     
     <section id='sotd'>
-      <p>
-        You need to have a custom SotD paragraph. Maybe give a succinct description of your spec's
-        status.
-      </p>
+      <p>This is a draft proposal to replace the "accesskey" section of the W3C's HTML specification. It will be proposed to the HTML accessibility Task Force, for adoption as a proposed change to the HTML specification.</p>
     </section>
     
-    <section>
-      <h2>Section Title</h2>
-      <p>
-        Blah blah blah...
-      </p>
-    </section>
+  <section id="TOC">
+   <h2>Contents</h2>
+   <ul>
+    <li><a href="#sotd">Status of this document</a></li>
     
+    <li><a href="assigning-keyboard-shortcuts">5.5 Assigning Keyboard Shortcuts</a>
+     <ul>
+      <li><a href="#introduction-9">5.5.1 Introduction</a></li>
+      <li><a href="#the-accesskey-attribute">5.5.2 The <dfn><code>accesskey</code></dfn> attribute</a></li>
+      <li><a href="processing-model-7">5.5.3 Processing model</a></li>
+     </ul></li>
+
+  <section><h3 id="assigning-keyboard-shortcuts">5.5 Assigning keyboard shortcuts</h3>
+
+  <section><h4 id="introduction-9">5.5.1 Introduction</h4>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>Each element that can be activated or focused can be assigned a single key combination to
+  activate it, using the <code id="introduction-9:the-accesskey-attribute"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute.</p>
+
+  <p>The exact shortcut is determined by the user agent, based on information about the user's
+  keyboard, what keyboard shortcuts already exist on the platform, and what other shortcuts have
+  been specified on the page, using the information provided in the <code id="introduction-9:the-accesskey-attribute-2"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute as a guide.</p>
+
+  <p>In order to ensure that a relevant keyboard shortcut is available on a wide variety of input
+  devices, the author can provide a number of alternatives in the <code id="introduction-9:the-accesskey-attribute-3"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute.</p>
+
+  <p>Each alternative consists of a single character, such as a letter or digit.</p>
+
+  <p>User agents can provide users with a list of the keyboard shortcuts, but authors are encouraged
+  to do so also. The <code id="introduction-9:dom-accesskeylabel"><a href="editing.html#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute returns a
+  string representing the actual key combination assigned by the user agent.</p>
+
+  <div class="example">
+
+   <p>In this example, an author has provided a button that can be invoked using a shortcut key. To
+   support full keyboards, the author has provided "C" as a possible key. To support devices
+   equipped only with numeric keypads, the author has provided "1" as another possibly key.</p>
+
+   <pre>&lt;input type=button value=Collect onclick="collect()"
+       <strong>accesskey="C 1"</strong> id=c&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>To tell the user what the shortcut key is, the author has this script here opted to explicitly
+   add the key combination to the button's label:</p>
+
+   <pre>function addShortcutKeyLabel(button) {
+<strong>  if (button.accessKeyLabel != '')
+    button.value += ' (' + button.accessKeyLabel + ')';</strong>
+}
+addShortcutKeyLabel(document.getElementById('c'));</pre>
+
+   <p>Browsers on different platforms will show different labels, even for the same key combination,
+   based on the convention prevalent on that platform. For example, if the key combination is the
+   Control key, the Shift key, and the letter C, a Windows browser might display
+   "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", while
+   an Emacs browser might just display "<samp>C-C</samp>". Similarly, if the key combination is the
+   Alt key and the Escape key, Windows might use "<samp>Alt+Esc</samp>", Mac might use
+   "<samp>⌥⎋</samp>", and an Emacs browser might use "<samp>M-ESC</samp>" or
+   "<samp>ESC ESC</samp>".</p>
+
+   <p>In general, therefore, it is unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="editing.html#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
+
+  </div></section>
+
+
+  <section><h4 id="the-accesskey-attribute">5.5.2 The <dfn><code>accesskey</code></dfn> attribute</h4>
+
+  <p>All <a href="infrastructure.html#html-elements" id="the-accesskey-attribute:html-elements">HTML elements</a> may have the <code id="the-accesskey-attribute:the-accesskey-attribute"><a href="editing.html#the-accesskey-attribute">accesskey</a></code>
+  content attribute set. The <code id="the-accesskey-attribute:the-accesskey-attribute-2"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute's value is used
+  by the user agent as a guide for creating a keyboard shortcut that activates or focuses the
+  element.</p>
+
+  <p>If specified, the value must be an <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
+  that are <a href="infrastructure.html#case-sensitive" id="the-accesskey-attribute:case-sensitive">case-sensitive</a>, each of which must be exactly one Unicode code point in
+  length.</p>
+
+  <div class="example">
+
+   <p>In the following example, a variety of links are given with access keys so that keyboard users
+   familiar with the site can more quickly navigate to the relevant pages:</p>
+
+   <pre>&lt;nav&gt;
+ &lt;p&gt;
+  &lt;a title="Consortium Activities" accesskey="A" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
+  &lt;a title="Technical Reports and Recommendations" accesskey="T" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
+  &lt;a title="Alphabetical Site Index" accesskey="S" href="/Consortium/siteindex"&gt;Site Index&lt;/a&gt; |
+  &lt;a title="About This Site" accesskey="B" href="/Consortium/"&gt;About Consortium&lt;/a&gt; |
+  &lt;a title="Contact Consortium" accesskey="C" href="/Consortium/contact"&gt;Contact&lt;/a&gt;
+ &lt;/p&gt;
+&lt;/nav&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In the following example, the search field is given two possible access keys, "s" and "0" (in
+   that order). A user agent on a device with a full keyboard might pick <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></kbd> as the shortcut key,
+   while a user agent on a small device with just a numeric keypad might pick just the plain
+   unadorned key <kbd><kbd>0</kbd></kbd>:</p>
+
+   <pre>&lt;form action="/search"&gt;
+ &lt;label&gt;Search: &lt;input type="search" name="q" accesskey="s 0"&gt;&lt;/label&gt;
+ &lt;input type="submit"&gt;
+&lt;/form&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In the following example, a button has possible access keys described. A script then tries to
+   update the button's label to advertise the key combination the user agent selected.</p>
+
+   <pre>&lt;input type=submit accesskey="N @ 1" value="Compose"&gt;
+...
+&lt;script&gt;
+ function labelButton(button) {
+   if (button.accessKeyLabel)
+     button.value += ' (' + button.accessKeyLabel + ')';
+ }
+ var inputs = document.getElementsByTagName('input');
+ for (var i = 0; i &lt; inputs.length; i += 1) {
+   if (inputs[i].type == "submit")
+     labelButton(inputs[i]);
+ }
+&lt;/script&gt;</pre>
+
+   <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On
+   another, it might become "<samp>Compose (Alt+⇧+1)</samp>". If the user agent doesn't
+   assign a key, it will be just "<samp>Compose</samp>". The exact string depends on what the
+   <a href="editing.html#assigned-access-key" id="the-accesskey-attribute:assigned-access-key">assigned access key</a> is, and on how the user agent represents that key
+   combination.</p>
+
+  </div></section>
+
+
+  
+
+  <section><h4 id="processing-model-7">5.5.3 Processing model</h4>
+
+  <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a key combination derived from the element's
+  <code id="processing-model-7:the-accesskey-attribute"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> content attribute. Initially, an element must not
+  have an <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key">assigned access key</a>.</p>
+
+  <p>Whenever an element's <code id="processing-model-7:the-accesskey-attribute-2"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute is set, changed,
+  or removed, the user agent must update the element's <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-2">assigned access key</a> by running
+  the following steps:</p>
+
+  <ol><li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute, then skip
+   to the <i>fallback</i> step below.</p></li><li><p>Otherwise, <a href="infrastructure.html#split-a-string-on-spaces" id="processing-model-7:split-a-string-on-spaces">split the attribute's value on
+   spaces</a>, and let <var>keys</var> be the resulting tokens.</p></li><li>
+
+    <p>For each value in <var>keys</var> in turn, in the order the tokens appeared in the
+    attribute's value, run the following substeps:</p>
+
+    <ol><li><p>If the value is not a string exactly one Unicode code point in length, then skip the
+     remainder of these steps for this value.</p></li><li><p>If the value does not correspond to a key on the system's keyboard, then skip the
+     remainder of these steps for this value.</p></li><li><p>If the user agent can find a mix of zero or more modifier keys that, combined with the
+     key that corresponds to the value given in the attribute, can be used as the access key, then
+     the user agent may assign that combination of keys as the element's <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-3">assigned access
+     key</a> and abort these steps.
+     <a href="introduction.html#fingerprinting-vector" id="processing-model-7:fingerprinting-vector" class="fingerprint" title="There is a potential fingerprinting vector here."><img alt="(This is a fingerprinting vector.)" src="img/fingerprint.png" width="46" height="64"></a>
+     </p></li></ol>
+
+   </li><li><p><i>Fallback</i>: Optionally, the user agent may assign a key combination of its choosing
+   as the element's <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-4">assigned access key</a> and then abort these steps.</p></li><li><p>If this step is reached, the element has no <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned access key</a>.</p></li></ol>
+
+  <p>Once a user agent has selected and assigned an access key for an element, the user agent should
+  not change the element's <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-6">assigned access key</a> unless the <code id="processing-model-7:the-accesskey-attribute-4"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> content attribute is changed or the element is moved to
+  another <code id="processing-model-7:document"><a href="dom.html#document">Document</a></code>.</p>
+
+  <p>When the user presses the key combination corresponding to the <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned access key</a>
+  for an element, if the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the
+  command's <a href="semantics.html#command-facet-hiddenstate" id="processing-model-7:command-facet-hiddenstate">Hidden State</a> facet is false (visible),
+  the command's <a href="semantics.html#command-facet-disabledstate" id="processing-model-7:command-facet-disabledstate">Disabled State</a> facet is also false
+  (enabled), the element is <a href="infrastructure.html#in-a-document" id="processing-model-7:in-a-document">in a <code>Document</code></a> that has an associated
+  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent must trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p>
+
+  <p class="note">User agents <a href="semantics.html#expose-commands-in-ui">might expose</a> elements that have
+  an <code id="processing-model-7:the-accesskey-attribute-5"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> attribute in other ways as well, e.g. in a menu
+  displayed in response to a specific key combination.</p> 
+
+  <hr>
+
+  <p>The <dfn id="dom-accesskey"><code>accessKey</code></dfn> IDL attribute must
+  <a href="infrastructure.html#reflect" id="processing-model-7:reflect">reflect</a> the <code id="processing-model-7:the-accesskey-attribute-6"><a href="editing.html#the-accesskey-attribute">accesskey</a></code> content attribute.</p>
+
+  <p>The <dfn id="dom-accesskeylabel"><code>accessKeyLabel</code></dfn> IDL attribute must return
+  a string that represents the element's <a href="editing.html#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned access key</a>, if any. If the element
+  does not have one, then the IDL attribute must return the empty string.</p></section></section>
+
+      
     <section class='appendix'>
       <h2>Acknowledgements</h2>
-      <p>
-        Many thanks to Robin Berjon for making our lives so much easier with his cool tool.
-      </p>
+      <p>Many thanks to Robin Berjon for making our lives so much easier with his cool tool Respec.</p>
+      <p>Many thanks to John Foliot, Jukka Korpela, Deborah Kaplan, Dominic Mezzoni, Léonie Watson and many others for direct contributions to this.</p>
     </section>
   </body>
 </html>
