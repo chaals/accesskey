@@ -91,23 +91,19 @@
 
   <p><i>This section is non-normative.</i></p>
 
-  <p>Each element that can be activated or focused can be assigned shortcut activations method, such as a key combination or direct access voice command, using the <code id="introduction-9:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
+  <p>Some common browsing functions have mutiple "shortcut" activations: going back in history, following a link or selecting an item in a form menu may be done through "pressing" an onscreen button, a keystroke, a gesture, or other command. Likewise, in many web apps, especially those that users interact with often such as webmail, applications for work, or common recreational sites, it is helpful to provide activation that minimises the amount of physical work a user needs to do. Typically, these are features remembered by frequent use, but it is important that users can discover them and that they meet the particular needs of a user, in order to be a genuine shortcut.</p>
 
-  <p>The exact shortcut is determined by the user agent, potentially using information about the user's preferences, keyboard, what shortcuts exist on the platform, and what other shortcuts have been specified on the page, as well as the information provided in the <code id="introduction-9:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
+  <p>HTML lets authors request shortcut activations for any element that can receive focus or be activated, using the <code id="introduction-9:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code> attribute. Authors can provide several suggestions for shortcuts in the <code id="introduction-9:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
-  <p>Authors <em class="rfc2119">may</em> provide a number of alternative suggestions for shortcuts in the <code id="introduction-9:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
+  <p>The actual shortcut(s) assigned, such as a key combination or direct access voice command, is determined by the user agent, using information about the user's preferences, keyboard, what shortcuts exist on the platform, and what other shortcuts have been specified on the page, as well as the information provided in the <code id="introduction-9:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
-  <p>Each suggestion consists of a character, or a string of characters with no spaces. Authors <em class="rfc2119">may</em> specify key combinations, using named modifier keys and a single character, joined by hypens</p>
-
-  <p>User agents <em class="rfc2119">should</em> indicate whether a page has shortcuts assigned, and if so <em class="rfc2119">should</em> provide users with a list of the current shortcuts for a page. The <code id="introduction-9:dom-accesskeylabel"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute returns a
-  string representing the actual shortcut assigned by the user agent.</p>
 
   <div class="example">
 
-   <p>In this example, an author has provided a button that can be invoked using a shortcut. To support latin keyboards, the author has suggested "S" as a possible key. To support devices equipped only with numeric keypads, the author has also suggested "1", and to support Cyrillic keyboards, the author suggests "Я". Finally, the author has provided a suggestion that is perhaps available on many desktop layouts.</p>
+   <p>In this example, an author has provided a button that can be invoked using a shortcut. The author has suggested the russian word "Написать", the latin keys "w" and "c", and the number "1".</p>
 
-   <pre>&lt;input type="button" value="Найти" onclick="search()"
-       <strong>accesskey="S 1 Я meta-shift-5"</strong> id=c&gt;</pre>
+   <pre>&lt;input type="button" value="Написать" onclick="compose()"
+       <strong>accesskey="Написать С W 1"</strong> id="Написать"&gt;</pre>
 
   </div>
 
@@ -132,6 +128,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
    <p>In general, therefore, it is unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
 
+  <p>The author generally doesn't know a lot about the user's environment - what keys are convenient to use, or taken up by system extensions, or missing from the keyboard. It is generally unwise to provide strong suggestions for behaviour that already has 
+
   </div></section>
 
 
@@ -147,8 +145,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
   <div class="example">
 
-   <p>In the following example, a variety of links are given with access keys so that keyboard users
-   familiar with the site can more quickly navigate to the relevant pages:</p>
+   <p>In the following example, a set of links are given <code>accesskey</code>s so that users
+   familiar with the site can quickly navigate to relevant pages:</p>
 
    <pre>&lt;nav&gt;
  &lt;p&gt;
@@ -176,6 +174,9 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
   </div>
 
+  <p>User agents <em class="rfc2119">should</em> indicate whether a page has shortcuts assigned, and if so <em class="rfc2119">should</em> provide users with a list of the current shortcuts for a page. The <code id="introduction-9:dom-accesskeylabel"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute returns a
+  string representing the actual shortcut assigned by the user agent.</p>
+
   <div class="example">
 
    <p>In the following example, a button has possible access keys described. A script then tries to
@@ -194,6 +195,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
      labelButton(inputs[i]);
  }
 &lt;/script&gt;</pre>
+
+
 
    <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On
    another, it might become "<samp>Compose (Alt+⇧+1)</samp>". If the user agent doesn't
