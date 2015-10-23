@@ -88,10 +88,10 @@
   </section>
 
   <section id="why"><h2>Rationale for this extension</h2>
-    <p>The current HTML accesskey definition is an improvement on the HTML 4 specification, allowing for multiple keys to cope with different user environments. However, there are still a number of problems:</p>
+    <p>The definition of <code>accesskey</code> in HTML5 is a clear improvement on the HTML 4 specification, for example allowing for multiple keys to cope with different user environments. However, there are still a number of problems:</p>
     <dl>
       <dt>Javascript shortcuts break user expectations</dt>
-        <dd>For many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is a bad practice, as it potentially interferes with user agent behaviour, and because there is no general discoverability mechanism for javascript-based activations, the different behaviour of one site can come as an unpleasant surprise to users. Improving <code>accesskey</code> to the extent that it can easily replace the benefits of the javascript approach, while mitigating the drawbacks, is a major motivation for this extension.</p>
+        <dd>Because implementation of <code>accesskey</code> in browsers has been of poor quality, for many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is a bad practice, as it potentially interferes with user agent behaviour, and because there is no general discoverability mechanism for javascript-based activations, the different behaviour of one site can come as an unpleasant surprise to users. Improving <code>accesskey</code> to the extent that it can easily replace the benefits of the javascript approach, while mitigating the drawbacks, is a major motivation for this extension.</dd>
       <dt>Conflict resolution</dt>
         <dd>The current specification allows for the User Agent determining "what keys are available", of the author's suggested values for accesskey. However, its algorithm is too limiting, failing to take into account the point that the "first available key" may not be the one most appropriate for the user.</dd>
       <dt>Discoverability</dt>
@@ -121,7 +121,7 @@
 
   <div class="example">
 
-   <p>In this example, an author has provided a button that can be invoked using a shortcut. The author has suggested the russian word "Написать", the latin keys "w" and "c", and the number "1".</p>
+   <p>In this example, an author has provided a button and requested a shortcut activation. The author has suggested the russian word "Написать", the latin keys "w" and "c", and the number "1" as useful hints for what makes sense as shortcut activations.</p>
 
    <pre><code>&lt;input type="button" value="Написать" onclick="compose()"
        <strong>accesskey="Написать С W 1"</strong> id="Написать"&gt;</code></pre>
@@ -159,6 +159,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   <p>If specified, the value must be an <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
   that are <a href="infrastructure.html#case-sensitive" id="the-accesskey-attribute:case-sensitive">case-sensitive</a>.</p>
 
+  <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, for backward compatibility.</p>
+
   <div class="example">
 
    <p>In the following example, a set of links are given <code>accesskey</code>s so that users
@@ -166,8 +168,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
    <pre>&lt;nav&gt;
  &lt;p&gt;
-  &lt;a title="Consortium Activities" accesskey="A" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
-  &lt;a title="Technical Reports and Recommendations" accesskey="T" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
+  &lt;a title="Consortium Activities" accesskey="Activity a" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
+  &lt;a title="Technical Reports and Recommendations" accesskey="TR" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
   &lt;a title="Alphabetical Site Index" accesskey="S" href="/Consortium/siteindex"&gt;Site Index&lt;/a&gt; |
   &lt;a title="About This Site" accesskey="B" href="/Consortium/"&gt;About Consortium&lt;/a&gt; |
   &lt;a title="Contact Consortium" accesskey="C" href="/Consortium/contact"&gt;Contact&lt;/a&gt;
@@ -196,7 +198,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
    <p>In the following example, a button has possible access keys described. A script then tries to
    update the button's label to advertise the shortcut the user agent selected.</p>
 
-   <pre>&lt;input type=submit accesskey="N @ 1" value="Compose"&gt;
+   <pre><code>&lt;input id="compose" type=submit accesskey="N @ 1" title="write a new email message" value="Compose"&gt;
 ...
 &lt;script&gt;
  function labelButton(button) {
@@ -210,18 +212,9 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
  }
 &lt;/script&gt;</pre>
 
-
-
-   <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On
-   another, it might become "<samp>Compose (Alt+⇧+1)</samp>". If the user agent doesn't
-   assign a shortcut, it will be just "<samp>Compose</samp>". The exact string depends on what the
-   <a href="#assigned-access-key" id="the-accesskey-attribute:assigned-access-key">assigned access key</a> is, and on how the user agent represents that key
-   combination.</p>
+   <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On another, it might become "<samp>Compose (Alt+⇧+1)</samp>". A voice interface, on user request for shortcuts, might state that a command is available called "compose", whose function is to "write a new email message". If the user agent doesn't assign a shortcut, it will be just "<samp>Compose</samp>". The exact string depends on what the user agent assigns as an activation shortcut, and how the user agent represents that shortcut.</p>
 
   </div></section>
-
-
-  
 
   <section><h4 id="processing-model-7">5.5.3 Processing model</h4>
 
@@ -233,7 +226,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   or removed, the user agent must update the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-2">assigned access key</a> by running
   the following steps:</p>
 
-  <ol><li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute, then skip
+  <ol><li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute, stop.
+      <li>If the user agent has a stored user preference for activation of the element, then skip
    to the <i>fallback</i> step below.</p></li><li><p>Otherwise, <a href="infrastructure.html#split-a-string-on-spaces" id="processing-model-7:split-a-string-on-spaces">split the attribute's value on
    spaces</a>, and let <var>keys</var> be the resulting tokens.</p></li><li>
 
@@ -261,24 +255,19 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
   <p>Otherwise, if the element is "active" the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned accesskey.</p>
 
-  <p class="note">User agents <a href="semantics.html#expose-commands-in-ui">might expose</a> elements that have
-  an <code id="processing-model-7:the-accesskey-attribute-5"><a href="#the-accesskey-attribute">accesskey</a></code> attribute in other ways as well, e.g. in a menu
-  displayed in response to a specific key combination.</p> 
-
   <hr>
 
   <p>The <dfn id="dom-accesskey"><code>accessKey</code></dfn> IDL attribute must
   <a href="infrastructure.html#reflect" id="processing-model-7:reflect">reflect</a> the <code id="processing-model-7:the-accesskey-attribute-6"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute.</p>
 
   <p>The <dfn id="dom-accesskeylabel"><code>accessKeyLabel</code></dfn> IDL attribute must return
-  a string that represents the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned access key</a>, if any. If the element
-  does not have one, then the IDL attribute must return the empty string.</p></section></section>
+  a string that represents the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned activation shortcut(s)</a>, if any. If the element has none, then the IDL attribute must return the empty string.</p></section></section>
 
       
     <section class='appendix' id="acknowledgements">
       <h2>Acknowledgements</h2>
-      <p>Many thanks to Robin Berjon for making our lives so much easier with his cool tool Respec.</p>
-      <p>This is a piece of work that has developed over almost two decades, and a great many people have made important contributions. The people who worked on the original <code>accesskey</code> specification in HTML 4, the <code>access</code> element proposed for XHTML2, Deborah Kaplan, Dominic Mezzoni, Earl Johnson, Ian Hickson, John Foliot, Jukka Korpela, Simon Peters, and many others - some of whom should have been mentioned - for direct contributions to this work.</p>
+      <p>Many thanks to Robin Berjon for making spec editing easier with Respec.</p>
+      <p>This is a piece of work that has developed over almost two decades, and a great many people have made important contributions. As well as all the the people who worked on the original <code>accesskey</code> specification in HTML 4 and the <code>access</code> element proposed for XHTML2, and many people who deserve a mention but are not noted here, the editor owes explicit thanks to Deborah Kaplan, Dominic Mazzoni, Earl Johnson, Emmanuelle Gutiérrez y Restrepo, Ian Hickson, John Foliot, Judy Brewer, Jukka Korpela, Léonie Watson, Philippe le Hégaret, Rafael Romero, Shane McCarron, Simon Pieters, and the Paris Web community for direct contributions that have improved this document.</p>
     </section>
   </body>
 </html>
