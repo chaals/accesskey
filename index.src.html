@@ -66,7 +66,7 @@
     </section>
     
     <section id='sotd'>
-      <p>This is a draft proposal to replace the "accesskey" section of the W3C's HTML specification. It will be proposed to the HTML accessibility Task Force, for adoption as a proposed change to the HTML specification.</p>
+      <p>This is a draft proposal to replace the "accesskey" section of the W3C's HTML specification. It will be proposed to the Web Platform Group, the Web Incubator Community Group, or the HTML accessibility Task Force, for adoption as a proposed change to the HTML specification.</p>
     </section>
     
   <section id="TOC">
@@ -90,6 +90,8 @@
   <section id="why"><h2>Rationale for this extension</h2>
     <p>The current HTML accesskey definition is an improvement on the HTML 4 specification, allowing for multiple keys to cope with different user environments. However, there are still a number of problems:</p>
     <dl>
+      <dt>Javascript shortcuts break user expectations</dt>
+        <dd>For many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is a bad practice, as it potentially interferes with user agent behaviour, and because there is no general discoverability mechanism for javascript-based activations, the different behaviour of one site can come as an unpleasant surprise to users. Improving <code>accesskey</code> to the extent that it can easily replace the benefits of the javascript approach, while mitigating the drawbacks, is a major motivation for this extension.</p>
       <dt>Conflict resolution</dt>
         <dd>The current specification allows for the User Agent determining "what keys are available", of the author's suggested values for accesskey. However, its algorithm is too limiting, failing to take into account the point that the "first available key" may not be the one most appropriate for the user.</dd>
       <dt>Discoverability</dt>
@@ -112,6 +114,8 @@
 
   <p>HTML lets authors request shortcut activations for any element that can receive focus or be activated, using the <code id="introduction-9:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code> attribute. Authors can provide several suggestions for shortcuts in the <code id="introduction-9:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
+  <p>Note that it is not a good idea to provide shortcuts for normal browser function. Where HTML already provides a way to indicate something the browser can act on, such as using <code>rel="help"</code> or <code>&lt;button …&gt;</code> it is better to use these features than to assign an <code>accesskey</code> attribute.</p>
+
   <p>The actual shortcut(s) assigned, such as a key combination or direct access voice command, is determined by the user agent, using information about the user's preferences, keyboard, what shortcuts exist on the platform, and what other shortcuts have been specified on the page, as well as the information provided in the <code id="introduction-9:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
 
@@ -119,10 +123,14 @@
 
    <p>In this example, an author has provided a button that can be invoked using a shortcut. The author has suggested the russian word "Написать", the latin keys "w" and "c", and the number "1".</p>
 
-   <pre>&lt;input type="button" value="Написать" onclick="compose()"
-       <strong>accesskey="Написать С W 1"</strong> id="Написать"&gt;</pre>
+   <pre><code>&lt;input type="button" value="Написать" onclick="compose()"
+       <strong>accesskey="Написать С W 1"</strong> id="Написать"&gt;</code></pre>
+
+  <p>A browser might apply this by adding a voice command "Написать" to a grammar of expected commands for which an event can be fired, by listening for keypresses of the Cyrillic letters "Н" (equivalent to the latin "n") or "П" (equivalent to latin "P") or one of the letters proposed by the author, perhaps with a standard modifier.</p>
 
   </div>
+
+  <p>The user agent is best-placed to inform the user that there are shortcut activations for the page, and explain the particular activation shortcuts and what they will do. But HTML also provides an <code>accessKeyLabel</code> DOM attribute, which is text created by the user agent describing the shortcut. Applications can use this to <strong>reinforce</strong> the information that a shortcut is available.</p>
 
   <div class="example">
 
@@ -134,18 +142,9 @@
 }
 addShortcutKeyLabel(document.getElementById('c'));</pre>
 
-   <p>Browsers on different platforms will show different labels, even for the same key combination,
-   based on the convention prevalent on that platform. For example, if the key combination is the
-   Control key, the Shift key, and the letter C, a Windows browser might display
-   "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", while
-   an Emacs browser might just display "<samp>C-C</samp>". Similarly, if the key combination is the
-   Alt key and the Escape key, Windows might use "<samp>Alt+Esc</samp>", Mac might use
-   "<samp>⌥⎋</samp>", and an Emacs browser might use "<samp>M-ESC</samp>" or
-   "<samp>ESC ESC</samp>".</p>
+   <p>Different browsers on different platforms can show different labels, even for the same key combination.For example, if the activation shortcut is the Control key, the Shift key, and the letter C, a Windows browser might display "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", and an Emacs browser might just display "<samp>C-C</samp>".</p>
 
-   <p>In general, therefore, it is unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
-
-  <p>The author generally doesn't know a lot about the user's environment - what keys are convenient to use, or taken up by system extensions, or missing from the keyboard. It is generally unwise to provide strong suggestions for behaviour that already has shortcuts in the user agent.</p>
+   <p>It is therefore unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
 
   </div></section>
 
@@ -179,15 +178,13 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
   <div class="example">
 
-   <p>In the following example, the search field is given two possible access keys, "s" and "0" (in
-   that order). A user agent on a device with a latin keyboard might pick <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></kbd> as the shortcut key,
-   while a user agent on a small device with a telephone keypad might pick just the plain
-   unadorned key <kbd><kbd>0</kbd></kbd>:</p>
+   <p>In the following example, a search field is identified using the standard HTML technique <code>input type="search"</code>. A link to an advanced interface is available, but there is no standard HTML technique for identifying a "more advanced" version. Assuming that advanced search is a relatively common user interaction on this site, an <code>accesskey</code> attribute is present to request an activation shortcut, and the application has suggested three possible access keys, "advanced", "s" and "9" in that order. A user agent on a device with a "QWERTY" keyboard might pick the combination <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></kbd> as the shortcut if it is available, first falling back to <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></kbd> and then <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>9</kbd></kbd>. A user agent on a small device with a telephone keypad might pick just the plain unadorned key <kbd>9</kbd>:</p>
 
-   <pre>&lt;form action="/search"&gt;
- &lt;label&gt;Search: &lt;input type="search" name="q" accesskey="s 0"&gt;&lt;/label&gt;
+   <pre><code>&lt;form action="/search"&gt;
+ &lt;label&gt;Search: &lt;input type="search" name="q"&gt;&lt;/label&gt;
+ &lt;a href="advanced.html" accesskey="advanced s 9"
  &lt;input type="submit"&gt;
-&lt;/form&gt;</pre>
+&lt;/form&gt;</code></pre>
 
   </div>
 
@@ -197,7 +194,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   <div class="example">
 
    <p>In the following example, a button has possible access keys described. A script then tries to
-   update the button's label to advertise the key combination the user agent selected.</p>
+   update the button's label to advertise the shortcut the user agent selected.</p>
 
    <pre>&lt;input type=submit accesskey="N @ 1" value="Compose"&gt;
 ...
@@ -217,7 +214,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
    <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On
    another, it might become "<samp>Compose (Alt+⇧+1)</samp>". If the user agent doesn't
-   assign a key, it will be just "<samp>Compose</samp>". The exact string depends on what the
+   assign a shortcut, it will be just "<samp>Compose</samp>". The exact string depends on what the
    <a href="#assigned-access-key" id="the-accesskey-attribute:assigned-access-key">assigned access key</a> is, and on how the user agent represents that key
    combination.</p>
 
