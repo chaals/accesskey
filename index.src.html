@@ -83,6 +83,7 @@
          <li><a href="processing-model-7">5.5.3 Processing model</a></li>
         </ul></li>
       </ul></li>
+    <li><a href="#changes">Changes from the HTML5 definition</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
    </ul>
   </section>
@@ -91,11 +92,15 @@
     <p>The definition of <code>accesskey</code> in HTML5 is a clear improvement on the HTML 4 specification, for example allowing for multiple keys to cope with different user environments. However, there are still a number of problems:</p>
     <dl>
       <dt>Javascript shortcuts break user expectations</dt>
-        <dd>Because implementation of <code>accesskey</code> in browsers has been of poor quality, for many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is a bad practice, as it potentially interferes with user agent behaviour, and because there is no general discoverability mechanism for javascript-based activations, the different behaviour of one site can come as an unpleasant surprise to users. Improving <code>accesskey</code> to the extent that it can easily replace the benefits of the javascript approach, while mitigating the drawbacks, is a major motivation for this extension.</dd>
+        <dd>Because implementation of <code>accesskey</code> in browsers has been of poor quality, for many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is <em>worse</em> than the problem it attempts to resolve: 
+          <ul>
+            <li>it interferes with normal user agent behaviour, unpleasantly surprising some users</li>
+            <li>there is no discoverability mechanism for javascript-based activations. This is a particular problem when combining javascript libraries and/or browser extensions</li>
+          </ul>Improving <code>accesskey</code> to the extent that it can easily replace the benefits of the javascript approach, while mitigating its drawbacks, is a major motivation for this extension.</dd>
       <dt>Conflict resolution</dt>
         <dd>The current specification allows for the User Agent determining "what keys are available", of the author's suggested values for accesskey. However, its algorithm is too limiting, failing to take into account the point that the "first available key" may not be the one most appropriate for the user.</dd>
       <dt>Discoverability</dt>
-        <dd>In the current HTML specification there is no requirement for discoverability. This is a major problem with existing implementations, very few of which provide a means for the user to discover that accesskeys have been assigned. Instead the current specification <strong>assumes</strong> that authors will somehow present the required information to the user. For a browser-mediated interaction, this is inappropriate, placing the burden of work in the wrong part of the "hierarchy of needs" and making it less likely to be done, or done effectively. While the HTML specification has shied away from making user interface requirements, it should at least be clear when there is a need for <em>some</em> user interface if a functionality is going to work.</dd>
+        <dd>In the current HTML specification there is no requirement for discoverability. This is a major problem with existing implementations, very few of which provide a means for the user to discover that <code>accesskey</code>s have been assigned. Instead the current specification <strong>assumes</strong> that authors will somehow present the required information to the user. For a browser-mediated interaction, this is inappropriate, placing the burden of work in the wrong part of the "hierarchy of needs" and making it less likely to be done, or done effectively. While the HTML specification has rightly shied away from specifying user interfaces, it should at least be clear when there is a need for user interface if a functionality is going to work.</dd>
       <dt>Ecosystem requirements</dt>
         <dd>The current HTML specification assumes all shortcuts assigned will be key combinations. This does not meet the reality of deployed platforms, many of which either do not have a keyboard, or also permit other activations more appropriate for a shortcut.</dd>
         <dd>In addition, the current HTML specification fails to provide sufficient context to motivate the use of a shortcut, including when it is not useful, or when another method may be more appropriate.</dd>
@@ -114,7 +119,9 @@
 
   <p>HTML lets authors request shortcut activations for any element that can receive focus or be activated, using the <code id="introduction-9:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code> attribute. Authors can provide several suggestions for shortcuts in the <code id="introduction-9:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
-  <p>Note that it is not a good idea to provide shortcuts for normal browser function. Where HTML already provides a way to indicate something the browser can act on, such as using <code>rel="help"</code> or <code>&lt;button …&gt;</code> it is better to use these features than to assign an <code>accesskey</code> attribute.</p>
+  <p class="note">It is not a good idea to provide shortcuts for normal browser function. Where HTML already provides a way to indicate something the browser can act on, such as using <code>rel="help"</code> to identify a link to a help interface, it is better to use these features than to assign an <code>accesskey</code> attribute.</p>
+
+  <p class="issue">Currently the <code>rel</code> attribute only applies to <code>a</code>, <code>area</code>, and <code>link</code> elements. Should it be extended to cover e.g. elements with <code>role="link"</code> or interactive elements which can take on the functionalities of a link defined with <code>a role="…"</code>?</p>
 
   <p>The actual shortcut(s) assigned, such as a key combination or direct access voice command, is determined by the user agent, using information about the user's preferences, keyboard, what shortcuts exist on the platform, and what other shortcuts have been specified on the page, as well as the information provided in the <code id="introduction-9:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute.</p>
 
@@ -134,39 +141,41 @@
 
   <div class="example">
 
-   <p>To tell the user what the shortcut key is, the author has this script here opted to explicitly add the shortcut combination to the button's label:</p>
+    <p>To tell the user what the shortcut key is, this script explicitly adds the browser-described shortcut activation to the button's label:</p>
 
-   <pre>function addShortcutKeyLabel(button) {
+    <pre><code>function addShortcutKeyLabel(button) {
 <strong>  if (button.accessKeyLabel != '')
     button.value += ' (' + button.accessKeyLabel + ')';</strong>
 }
-addShortcutKeyLabel(document.getElementById('c'));</pre>
+addShortcutKeyLabel(document.getElementById('c'));</code></pre>
 
-   <p>Different browsers on different platforms can show different labels, even for the same key combination.For example, if the activation shortcut is the Control key, the Shift key, and the letter C, a Windows browser might display "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", and an Emacs browser might just display "<samp>C-C</samp>".</p>
+    <p>Different browsers on different platforms can show different labels, even for the same key combination.For example, if the activation shortcut is the Control key, the Shift key, and the letter C, a Windows browser might display "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", and an Emacs browser might just display "<samp>C-C</samp>". Where a voice command enabled, the value might be "<samp>^⇧C or say "compose"</samp>.</p>
 
-   <p>It is therefore unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
+    <p class="issue">For gestures, it is useful to present an animation of the gesture. Can we enable this?</p>
+
+    <p>It is therefore unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
 
   </div></section>
 
 
   <section><h4 id="the-accesskey-attribute">5.5.2 The <dfn><code>accesskey</code></dfn> attribute</h4>
 
-  <p>All <a href="infrastructure.html#html-elements" id="the-accesskey-attribute:html-elements">HTML elements</a> may have the <code id="the-accesskey-attribute:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code>
+    <p>All <a href="infrastructure.html#html-elements" id="the-accesskey-attribute:html-elements">HTML elements</a> may have the <code id="the-accesskey-attribute:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code>
   content attribute set. The <code id="the-accesskey-attribute:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute's value is used
   by the user agent as a guide for creating a shortcut that activates or focuses the
   element.</p>
 
-  <p>If specified, the value must be an <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
+    <p>If specified, the value must be an <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
   that are <a href="infrastructure.html#case-sensitive" id="the-accesskey-attribute:case-sensitive">case-sensitive</a>.</p>
 
-  <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, for backward compatibility.</p>
+    <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, for backward compatibility.</p>
 
   <div class="example">
 
-   <p>In the following example, a set of links are given <code>accesskey</code>s so that users
+    <p>In the following example, a set of links are given <code>accesskey</code>s so that users
    familiar with the site can quickly navigate to relevant pages:</p>
 
-   <pre>&lt;nav&gt;
+    <pre><code>&lt;nav&gt;
  &lt;p&gt;
   &lt;a title="Consortium Activities" accesskey="Activity a" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
   &lt;a title="Technical Reports and Recommendations" accesskey="TR" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
@@ -174,15 +183,15 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   &lt;a title="About This Site" accesskey="B" href="/Consortium/"&gt;About Consortium&lt;/a&gt; |
   &lt;a title="Contact Consortium" accesskey="C" href="/Consortium/contact"&gt;Contact&lt;/a&gt;
  &lt;/p&gt;
-&lt;/nav&gt;</pre>
+&lt;/nav&gt;</code></pre>
 
   </div>
 
   <div class="example">
 
-   <p>In the following example, a search field is identified using the standard HTML technique <code>input type="search"</code>. A link to an advanced interface is available, but there is no standard HTML technique for identifying a "more advanced" version. Assuming that advanced search is a relatively common user interaction on this site, an <code>accesskey</code> attribute is present to request an activation shortcut, and the application has suggested three possible access keys, "advanced", "s" and "9" in that order. A user agent on a device with a "QWERTY" keyboard might pick the combination <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></kbd> as the shortcut if it is available, first falling back to <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></kbd> and then <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>9</kbd></kbd>. A user agent on a small device with a telephone keypad might pick just the plain unadorned key <kbd>9</kbd>:</p>
+    <p>In the following example, a search field is identified using the standard HTML technique <code>input type="search"</code>. A link to an advanced interface is available, but there is no standard HTML technique for identifying a "more advanced" version. Assuming that advanced search is a relatively common user interaction on this site, an <code>accesskey</code> attribute is present to request an activation shortcut, and the application has suggested three possible access keys, "advanced", "s" and "9" in that order. A user agent on a device with a "QWERTY" keyboard might pick the combination <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></kbd> as the shortcut if it is available, first falling back to <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></kbd> and then <kbd><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>9</kbd></kbd>. A user agent on a small device with a telephone keypad might pick just the plain unadorned key <kbd>9</kbd>:</p>
 
-   <pre><code>&lt;form action="/search"&gt;
+    <pre><code>&lt;form action="/search"&gt;
  &lt;label&gt;Search: &lt;input type="search" name="q"&gt;&lt;/label&gt;
  &lt;a href="advanced.html" accesskey="advanced s 9"
  &lt;input type="submit"&gt;
@@ -192,6 +201,8 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
   <p>User agents <em class="rfc2119">should</em> indicate whether a page has shortcuts assigned, and if so <em class="rfc2119">should</em> provide users with a list of the current shortcuts for a page. The <code id="introduction-9:dom-accesskeylabel"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute returns a
   string representing the actual shortcut assigned by the user agent.</p>
+
+  <p class="note">There are a variety of interaction strategies that could be used to meet this requirement. Opera 12, and Opera mini, enabled a menu that presented the activation shortcuts enabled and what they did. iCab and many old phone brosers added icons to the screen. The excesskey extension for Opera added an icon and menu to the browsers User Interface alerting users to the fact that shortcuts were enabled. Some screenreaders announce a shortcut verbally. This specification does not recommend a specific user interface, because that inherently depends on the nature of the user agent.</p>
 
   <div class="example">
 
@@ -210,7 +221,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
    if (inputs[i].type == "submit")
      labelButton(inputs[i]);
  }
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 
    <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On another, it might become "<samp>Compose (Alt+⇧+1)</samp>". A voice interface, on user request for shortcuts, might state that a command is available called "compose", whose function is to "write a new email message". If the user agent doesn't assign a shortcut, it will be just "<samp>Compose</samp>". The exact string depends on what the user agent assigns as an activation shortcut, and how the user agent represents that shortcut.</p>
 
@@ -218,9 +229,7 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
 
   <section><h4 id="processing-model-7">5.5.3 Processing model</h4>
 
-  <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a key combination derived from the element's
-  <code id="processing-model-7:the-accesskey-attribute"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute. Initially, an element must not
-  have an <a href="#assigned-access-key" id="processing-model-7:assigned-access-key">assigned access key</a>.</p>
+    <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a user behaviour defined by the user agent. It is derived from presence of an <a href="#the-accesskey-attribute">accesskey</a></code> attribute, and normall takes into account content of that attribute.</p>
 
   <p>Whenever an element's <code id="processing-model-7:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute is set, changed,
   or removed, the user agent must update the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-2">assigned access key</a> by running
@@ -263,11 +272,22 @@ addShortcutKeyLabel(document.getElementById('c'));</pre>
   <p>The <dfn id="dom-accesskeylabel"><code>accessKeyLabel</code></dfn> IDL attribute must return
   a string that represents the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned activation shortcut(s)</a>, if any. If the element has none, then the IDL attribute must return the empty string.</p></section></section>
 
-      
+    <section id="changes">
+      <h2>Changes from the HTML 5 definition</h2>
+      <p>This specification introduces a number of changes to the HTML5 definition of <code>accesskey</code>:</p>
+      <ul>
+        <li>It is possible to specify tokens that are longer than a single character</li>
+        <li>It is valid for an author to request an accesskey without providing a proposed value</li>
+        <li>An element may have a predefined accesskey</li>
+        <li>User agents are free to define the shortcut activation as they choose<br>
+          in particular, the shortcuts are not required to be key combinations</li>
+        <li>An explicit request for user agents to provide discoverability</li>
+      </ul>
+    </section>  
     <section class='appendix' id="acknowledgements">
       <h2>Acknowledgements</h2>
       <p>Many thanks to Robin Berjon for making spec editing easier with Respec.</p>
-      <p>This is a piece of work that has developed over almost two decades, and a great many people have made important contributions. As well as all the the people who worked on the original <code>accesskey</code> specification in HTML 4 and the <code>access</code> element proposed for XHTML2, and many people who deserve a mention but are not noted here, the editor owes explicit thanks to Deborah Kaplan, Dominic Mazzoni, Earl Johnson, Emmanuelle Gutiérrez y Restrepo, Ian Hickson, John Foliot, Judy Brewer, Jukka Korpela, Léonie Watson, Philippe le Hégaret, Rafael Romero, Shane McCarron, Simon Pieters, and the Paris Web community for direct contributions that have improved this document.</p>
+      <p>This is a piece of work that has developed over almost two decades, and a great many people have made important contributions. As well as all the the people who worked on the original <code>accesskey</code> specification in HTML 4 and the <code>access</code> element proposed for XHTML2, and many people who deserve a mention but are not noted here, the editor owes explicit thanks to Deborah Kaplan, Dominic Mazzoni, Earl Johnson, Emmanuelle Gutiérrez y Restrepo, Ian Hickson, Johannes Wilm, John Foliot, Jonathan Avila, Judy Brewer, Jukka Korpela, Léonie Watson, Philippe le Hégaret, Rafael Romero, Richard Schwerdtfeger, Ryosuke Niwa, Shane McCarron, Simon Pieters, and the Paris Web community for direct contributions that have improved this document.</p>
     </section>
   </body>
 </html>
