@@ -1,12 +1,10 @@
 # accesskey
-This is [a draft alternative specification](http://chaals.github.io/accesskey/index.src.html) for a proposed replacement for the accesskey section in HTML
-Currently it is still getting worked up to the "starting point" - there are things I
-plan to do before I think of it as at "version 0":
+This is [a draft alternative specification](http://chaals.github.io/accesskey/index.src.html) for a proposed replacement for the accesskey section in HTML. It has now been proposed to the Web Incubator Community Group as an item for further development, so discussion can be fragmented between filing issues here, or [talking about it there](http://discourse.wicg.io/t/user-interaction-with-web-apps/1177).
 
-* Ensure User agents can put whatever makes sense as a shortcut (including non-keyboard shortcuts)
-* Allow words as well as single characters
-* Make user agents handle discovery of accesskeys
-* Allow specific key and modifier combinatins to be suggested
+The rationale is that interaction for web applications at the moment commonly introduces unexpected changes to the way a user agent behaves, hijacking functions that users rely on. 
+This is an inevitable result of using javascript to define the interaction. 
+Without a standard mechanism for knowing what specific interaction behaviours an author has requested, nor for authors to request a behaviour and allow the user agent to remap it, there is no way to do conflict resolution.
 
-And then I will request that the [HTML accessibility Task Force](http://www.w3.org/WAI/PF/HTML) adopt
-it as a draft replacement for what is in HTML at the moment
+The purpose of working on the `accesskey` attribute is in part to help resolve this situation: As a markup attribute reflected in the DOM, `accesskey` offers naive authors a simple way to extend interaction without the need for them to write script, while providing a framework which is exposed to script authors.
+
+This approach has been discussed in various places for a long time. The document provides an outline of those discussions, but needs to point to more background for many readers.
