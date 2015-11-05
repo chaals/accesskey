@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKeyLabel manual test - what happens</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    .fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc}
+    .partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc}
+  </style>
+ </head>
+ <body>
+<h1>Manual test of <code>accessKeyLabel</code></h1>
+<p>There is a button, with <code>accesskey="話 я g"</code> and a script that uses <code>accessKeyLabel</code> to show what shortcut should focus or trigger the button. 
+
+<h2>Expected result</h2>
+<p>The button text includes some activation based on "я" if you have a cyrillic keyboard, or else one based on "g" - and that if you use this activation the button is focused or pressed. When pressed, the button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+
+<p><button id="theButton" accesskey="話 я g" onclick="window.open('http://github.com/chaals/accesskey/tests/accesskeylabel-manual.html')">Play Github!</button></p>
+
+<h2 id="likely-fail">Likely failure modes</h2>
+<ul>
+ <li>If your browser does not implement <code>accessKeyLabel</code> the button should only show "Play Github!" as text.</li>
+ <li>If your browser does not implement the <a href="http://www.w3.org/TR/html5/editing.html#processing-model-4">HTML5 <code>accesskey</code> algorithm for choosing a value sensibly</a>, it may also show "activation: <var>[mod]</var>話" where [mod] is some set of keyboard modifiers written according to the platform conventions as <kbd>ctrl</kbd>, <kbd>⌥</kbd>, <kbd>M-</kbd>, etc.</li>
+</ul>
+
+<h2 id="results">Results</h2>
+<p>This <a href="http://github.com/chaals/accesskey/tests/accesskeylabel-manual.html">test is on github</a> to enable Pull Requests…</p>
+
+<dl>
+ <dt>Firefox 42, MacOS 10.10.5</dt>
+  <dd class="partial">The button has the text <samp>Play Github! activation: ⌃⌥話 я g</samp></dd>
+  <dd class="fail">Since I cannot generate the 話 character without using IME, I cannot find out if the accesskey works. But ⌃⌥я and ⌃⌥g do not work</dd>
+ <dt>Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
+ <dt>Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="fail">The button has the text "Play Github!"</dd>
+  <dd class="fail">I cannot find a shortcut to make the button work</dd>
+</dl>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<p>The first value for <code>accesskey</code> probably doesn't <strong>exist</strong> as a single key on any keyboard normal people are likely to have (unless it is in chinese?), so a browser that accepts it as a shortcut isn't helping much.</p>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  var theAccessKeyLabel = document.createElement('span');
+  if (theButton.accessKeyLabel) {
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+</script>
+</body>
