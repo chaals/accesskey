@@ -177,11 +177,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
 
     <pre><code>&lt;nav&gt;
  &lt;p&gt;
-  &lt;a title="Consortium Activities" accesskey="Activity a" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
-  &lt;a title="Technical Reports and Recommendations" accesskey="TR" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
-  &lt;a title="Alphabetical Site Index" accesskey="S" href="/Consortium/siteindex"&gt;Site Index&lt;/a&gt; |
-  &lt;a title="About This Site" accesskey="B" href="/Consortium/"&gt;About Consortium&lt;/a&gt; |
-  &lt;a title="Contact Consortium" accesskey="C" href="/Consortium/contact"&gt;Contact&lt;/a&gt;
+  &lt;a accesskey="Activity a" href="/Consortium/activities"&gt;Activities&lt;/a&gt; |
+  &lt;a accesskey="TR" href="/TR/"&gt;Technical Reports&lt;/a&gt; |
+  &lt;a accesskey="S" href="/Consortium/siteindex"&gt;Site Index&lt;/a&gt; |
+  &lt;a accesskey="B" href="/Consortium/"&gt;About Consortium&lt;/a&gt; |
+  &lt;a accesskey="C" href="/Consortium/contact"&gt;Contact&lt;/a&gt;
  &lt;/p&gt;
 &lt;/nav&gt;</code></pre>
 
@@ -247,7 +247,7 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
      <li><p>If the value does not correspond to a key on the system's keyboard, then skip the remainder of these steps for this value.</p></li>
      <li><p>If the user agent can find a mix of zero or more modifier keys that, combined with the key that corresponds to the value given in the attribute, can be used as the access key, then the user agent may assign that combination of keys as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-3">assigned access
      key</a> and abort these steps.
-     <a href="introduction.html#fingerprinting-vector" id="processing-model-7:fingerprinting-vector" class="fingerprint" title="There is a potential fingerprinting vector here."><img alt="(This is a fingerprinting vector.)" src="img/fingerprint.png" width="46" height="64"></a>
+     <a href="introduction.html#fingerprinting-vector" id="processing-model-7:fingerprinting-vector" class="fingerprint"><img alt="(This is a fingerprinting vector.)" src="img/fingerprint.png" width="46" height="64"></a>
      </p></li></ol>
 
    </li><li><p><i>Fallback</i>: The user agent <em class="rfc2119">should</em> assign a key combination and/or other shortcut of its choosing as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-4">assigned access key</a> and then abort these steps.</p></li><li><p>If this step is reached, the element has no <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned access key</a>.</p></li></ol>
