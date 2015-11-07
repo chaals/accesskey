@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKey cyrillic manual test - what happens</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    .fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc}
+    .partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc}
+  </style>
+ </head>
+ <body>
+<h1>Manual test of a cyrillic <code>accesskey</code> value</h1>
+<p>There is a button, with <code>accesskey="я"</code>. 
+
+<h2>Expected result</h2>
+<p>A shortcut based on "я" plus modifiers should either activate or focus the button. The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+
+<p><button id="theButton" accesskey="я" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">Play Github!</button></p>
+
+<h2 id="results">Results</h2>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-manual.html">test is on github</a> to enable Pull Requests…</p>
+
+<dl>
+ <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+dt>
+  <dd class="fail">With a cyrillic keyboard, standard <code>accesskey</code> modifiers plus "я" does not do anything.</dd>
+ <dt class="pass">Firefox 42, MacOS 10.10.5</dt>
+ <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
+  <dd class="pass">ctrl-alt-"я" presses the button, opening the github page</dd>
+ <dt class="pass">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</
+  <dd class="pass">ctrl-alt-"я" focuses and presses the button. The attempt to open a window is blocked, as if it were not triggered by a user action, but the button retains focus.</dd>
+</dl>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<p>The "я" key is standard on cyrillic keyboards. A browser that implements either the HTML4 or HTML5 version of <code>accesskey</code> will use it as the base of a shortcut.</p>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  var theAccessKeyLabel = document.createElement('span');
+  if (theButton.accessKeyLabel) {
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+</script>
+</body>
