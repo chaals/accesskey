@@ -12,6 +12,9 @@
     .pass { background-color: #cfc}
     dt.partial:before { content: "Partial implementation - " }
     .partial { background-color: #ffc}
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
   </style>
  </head>
  <body>
@@ -22,6 +25,8 @@
 <p>For users with a cyrillic keyboard, there should be a standard key based on "я" plus modifiers that either activates or focuses the button. For users who do not have a cyrillic keyboard but do have a latin keyboard, the shortcut should be based on "g". The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
 <p><button id="theButton" accesskey="я g" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-manual.html')">Play Github!</button></p>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
 
 <h2 id="likely-fail">Likely failure modes</h2>
 <ul>
@@ -38,6 +43,7 @@
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
   <dd>With a cyrillic keyboard set, none of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+  <dd class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
 <h2 id="discussion">Discussion</h2>
@@ -49,10 +55,15 @@
 
 <script>
   var theButton = document.getElementById('theButton');
-  var theAccessKeyLabel = document.createElement('span');
   if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
     theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
     theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
   }
 </script>
 </body>

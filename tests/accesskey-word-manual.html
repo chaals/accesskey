@@ -8,13 +8,13 @@
     dt, dd {padding-top: .2em; margin-top: .2em}
     dt.fail:before { content: "FAIL - " }
     .fail { background-color: #fcc }
-    .nothing { border: 3px red solid } 
     dt.pass:before { content: "PASS - " }
     .pass { background-color: #cfc }
-    .good { border: 3px green solid }
     dt.partial:before { content: "Partial implementation - " }
     .partial { background-color: #ffc }
-    .wrong { border: 3px gold solid } 
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
   </style>
  </head>
  <body>
@@ -26,16 +26,19 @@
 
 <p><button id="theButton" accesskey="word" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">Play Github!</button></p>
 
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
 <h2 id="results">Results</h2>
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
- <dt class="wrong">Firefox 42, MacOS 10.10.5</dt>
-  <dd class="wrong">Firefox exposes "<samp>^⌥word</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute, but it seems not to enable any shortcut.</dd>
+ <dt class="something">Firefox 42, MacOS 10.10.5</dt>
+  <dd class="something">Firefox exposes "<samp>^⌥word</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute, but it seems not to enable any shortcut.</dd>
  <dt class="nothing">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="nothing">Safari 9.01, MacOS 10.10.5</dt>
  <dt class="nothing">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
   <dd class="nothing">There is no apparent way to trigger the shortcut</dd>
+  <dd class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
 <h2 id="discussion">Discussion</h2>
@@ -45,10 +48,15 @@
 
 <script>
   var theButton = document.getElementById('theButton');
-  var theAccessKeyLabel = document.createElement('span');
   if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
     theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
     theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
   }
 </script>
 </body>
