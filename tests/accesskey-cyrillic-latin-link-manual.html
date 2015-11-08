@@ -2,7 +2,7 @@
 <html>
  <head>
   <meta charset="utf-8">
-  <title>accessKey cyrillic-latin manual test - what happens</title>
+  <title>accessKey cyrillic-latin link manual test - what happens</title>
   <style>
     dt {font-weight: bold}
     dt, dd {padding-top: .2em; margin-top: .2em}
@@ -16,12 +16,12 @@
  </head>
  <body>
 <h1>Manual test of HTML5 <code>accesskey</code> using cyrillic and latin</h1>
-<p>There is a button, with <code>accesskey="я g"</code>. 
+<p>There is a link, with <code>accesskey="я g"</code> (instead of a button as used in <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-manual.html">accesskey-cyrillic-latin-manual</a>).</p>
 
 <h2>Expected result</h2>
-<p>For users with a cyrillic keyboard, there should be a standard key based on "я" plus modifiers that either activates or focuses the button. For users who do not have a cyrillic keyboard but do have a latin keyboard, the shortcut should be based on "g". The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+<p>For users with a cyrillic keyboard, there should be a standard key based on "я" plus modifiers that either activates or focuses the link. For users who do not have a cyrillic keyboard but do have a latin keyboard, the shortcut should be based on "g". The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
-<p><button id="theButton" accesskey="я g" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-manual.html')">Play Github!</button></p>
+<p><a id="theButton" accesskey="word" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-link-manual.html">Play Github!</a></p>
 
 <h2 id="likely-fail">Likely failure modes</h2>
 <ul>
@@ -29,7 +29,7 @@
 </ul>
 
 <h2 id="results">Results</h2>
-<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-manual.html">test is on github</a> to enable Pull Requests…</p>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-link-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
  <dt class="fail">Firefox 42, MacOS 10.10.5</dt>
