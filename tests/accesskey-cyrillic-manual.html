@@ -6,12 +6,15 @@
   <style>
     dt {font-weight: bold}
     dt, dd {padding-top: .2em; margin-top: .2em}
-    .fail:before { content: "FAIL - " }
-    .fail { background-color: #fcc}
-    .pass:before { content: "PASS - " }
-    .pass { background-color: #cfc}
-    .partial:before { content: "Partial implementation - " }
-    .partial { background-color: #ffc}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc }
+    .nothing { border: 3px red solid } 
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc }
+    .good { border: 3px green solid }
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc }
+    .wrong { border: 3px gold solid } 
   </style>
  </head>
  <body>
@@ -30,6 +33,8 @@
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
   <dd class="fail">With a cyrillic keyboard, standard <code>accesskey</code> modifiers plus "я" does not do anything.</dd>
  <dt class="pass">Firefox 42, MacOS 10.10.5</dt>
+  <dd class="pass">ctrl-alt-"я" presses the button, opening the github page</dd>
+  <dd class="pass">Firefox exposes "<samp>^⌥я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
  <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
   <dd class="pass">ctrl-alt-"я" presses the button, opening the github page</dd>
  <dt class="pass">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
