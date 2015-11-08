@@ -244,7 +244,8 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
     attribute's value, run the following substeps:</p>
 
     <ol>
-     <li><p>If the value does not correspond to a key on the system's keyboard, then skip the remainder of these steps for this value.</p></li>
+     <li><p>If the value does not correspond to a key on the system's keyboard, then skip the remainder of these steps for this value.</p>
+         <p class="issue">The user agent probably doesn't have any information about what input methods are really available to the user. So how to select something appropriate?</p></li>
      <li><p>If the user agent can find a mix of zero or more modifier keys that, combined with the key that corresponds to the value given in the attribute, can be used as the access key, then the user agent may assign that combination of keys as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-3">assigned access
      key</a> and abort these steps.
      <a href="introduction.html#fingerprinting-vector" id="processing-model-7:fingerprinting-vector" class="fingerprint"><img alt="(This is a fingerprinting vector.)" src="img/fingerprint.png" width="46" height="64"></a>
