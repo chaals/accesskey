@@ -2,7 +2,7 @@
 <html>
  <head>
   <meta charset="utf-8">
-  <title>accessKey cyrillic-latin link manual test - what happens</title>
+  <title>accessKey two latin characters manual test - what happens</title>
   <style>
     dt {font-weight: bold}
     dt, dd {padding-top: .2em; margin-top: .2em}
@@ -41,14 +41,14 @@
  <dt class="fail">Safari 9.01, MacOS 10.10.5</dt>
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd>None of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus "я"</dd>
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
 <h2 id="discussion">Discussion</h2>
 <p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
 
-<p>This is a basic test of whether browsers implement part of the HTML5 algorithm. For users who do not have the key "available" but for whom the "g" key is "available", the shortcut should be based on "g".</p>
+<p>This is a basic test of whether browsers implement part of the HTML5 algorithm. Browsers that do not assign an <code>accesskey</code> when they meet an attribute that is a space-separated list of single characters almost certainly do not implement the HTML5 algorithm for processing <code>accesskey</code> at all.</p>
 
 <p>Unfortunately the HTML 5 specification does not define what "available" means. At the very least, it should be simple for the user to generate such a key, and using the HTML5 definition which requires the user agent to assign modifiers, "available" should mean it must not require any modifiers to generate the base key.</p>
 
