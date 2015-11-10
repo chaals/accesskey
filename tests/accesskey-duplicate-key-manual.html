@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKey duplicate key manual test - what happens</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc}
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc}
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc}
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
+  </style>
+ </head>
+ <body>
+<h1>Manual test of HTML5 <code>accesskey</code> repeating the key for two elements</h1>
+<p>There are two links, each with <code>accesskey="a"</code>. The first link is to the github repository for this test, the second is to the rendered "github.io" version of the test.</p>
+
+<h2>Expected result</h2>
+<p>@@</p>
+
+<p><a id="theButton" accesskey="a" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-duplicate-key-manual.html">Play Github!</a></p>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<p><a id="theOtherButton" accesskey="a" target="_blank" href="https://chaals.github.io/accesskey/tests/accesskey-duplicate-key-manual.html">See the test!</a></p>
+
+<p id="anotherAccesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<h2 id="likely-fail">Likely failure modes</h2>
+<ul>
+ <li>In browsers that implement a tolerant version of the HTML 4 definition of <code>accesskey</code>, but not the HTML5 version, only a shortcut based on "a" will work.</li>
+</ul>
+
+<h2 id="results">Results</h2>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">test is on github</a> to enable Pull Requests…</p>
+
+<dl>
+ <dt class="good">Firefox 42, MacOS 10.10.5</dt>
+  <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
+ <dt class="something">Safari 9.01, MacOS 10.10.5</dt>
+ <dt class="something">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="something">Seems to apply the accesskey to the last instance.</dd>
+ <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="fail">Vivaldi apparently does not enable an <code>accesskey</code>.</dd>
+  <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
+</dl>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<p>This is a basic test of whether browsers implement part of the HTML5 algorithm. For users who do not have the key "available" but for whom the "g" key is "available", the shortcut should be based on "g".</p>
+
+<p>Unfortunately the HTML 5 specification does not define what "available" means. At the very least, it should be simple for the user to generate such a key, and using the HTML5 definition which requires the user agent to assign modifiers, "available" should mean it must not require any modifiers to generate the base key.</p>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  var theOtherButton = document.getElementById('theOtherButton');
+  if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
+  }
+  if (theOtherButton.accessKeyLabel) {
+    var theOtherAccessKeyLabel = document.createElement('span');
+    theOtherAccessKeyLabel.innerHTML = " activation: " + theOtherButton.accessKeyLabel;
+    theOtherButton.appendChild(theOtherAccessKeyLabel);
+  }
+  if (theOtherButton.accessKey) {
+    var theOtherAccessKey = document.createElement('var');
+    theOtherAccessKey.innerHTML = theOtherButton.accessKey;
+    document.getElementById('anotherAccesskeyValue').appendChild(theOtherAccessKey);
+  }
+</script>
+</body>
