@@ -23,6 +23,9 @@
    <dt><a href="accesskey-duplicate-key-manual.html">accesskey-duplicate-key.html</a></dt>
     <dd>This tests what happens when the same value is used for the HTML <code>accesskey</code> attribute on two different elements. Neither HTML 4 nor HTML5 what should happen in this case.</dd>
     <dd>Results so far are interesting. Firefox does something helpful, Webkit/Blink-based browsers do something stupid that doesn't violate the spec</dd>
+   <dt><a href="accesskey-reflected-manual.html">accesskey-reflected-manual.html</a></dt>
+    <dd>This tests a basic requirement of the HTML5 definition, that the DOM <code>accessKey</code> reflect the HTML attribute, so any changes to its value are also made to the DOM attribute.</dd>
+    <dd>Results so far are good - all browsers tested do reflect the attribute.</dd>
    <dt><a href="accesskey-two-latin-manual.html">accesskey-two-latin-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 processing model, that using space-separated tokens results in <em>some</em> accesskey being assigned if possible.</dd>
     <dd>Results so far are depressing - no browser found to pass.</dd>

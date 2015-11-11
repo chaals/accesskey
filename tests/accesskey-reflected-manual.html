@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>DOM accessKey reflection manual test</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc }
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc }
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc }
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
+  </style>
+<script>
+function updateInfo() {
+  document.getElementById('theButton').setAttribute("accesskey","g");
+  var theButton = document.getElementById('theButton');
+  if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
+  }
+}
+</script>
+ </head>
+ <body>
+<h1>Manual test of DOM <code>accessKey</code> reflecting the HTML <code>accesskey</code> attribute value</h1>
+<p>There is a button, with <code>accesskey="a"</code>. After 10 seconds, a script changes the button's HTML <code>accesskey</code> attribute (using <code>setAttribute</code>) to "g".
+
+<h2>Expected result</h2>
+<p>A shortcut based on "a" plus modifiers should either activate or focus the button in the first 10 seconds after the page is loaded. After about 10 seconds, the button should add text describing the shortcut activation assigned, and the paragraph below the button identify the accesskey value as "g". The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+
+<p><button id="theButton" accesskey="a" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">Play Github!</button></p>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<h2 id="results">Results</h2>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html">test is on github</a> to enable Pull Requests…</p>
+
+<dl>
+ <dt class="partial">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="fail">Trying to use either key plus modifiers does not do anything.</dd>
+  <dd class="pass">After the timeout, the paragraph below the button gives "<samp>g</samp>" for the value of the <code>accesskey</code>, showing that the DOM <code>accessKey</code> has been successfully updated.</dd>
+ <dt class="pass">Firefox 42, MacOS 10.10.5</dt>
+  <dd class="pass">Within the first 10 seconds of loading, ctrl-alt-"a" presses the button, opening the github page. Afterward, ctrl-alt-g does so instead.</dd>
+  <dd class="pass">After the timeout, the paragraph below the button gives "<samp>g</samp>" for the value of the <code>accesskey</code>, showing that the DOM <code>accessKey</code> has been successfully updated.</dd>
+  <dd class="pass">Firefox adds "<samp>activation: ^⌥a</samp>" to the button, showing it successfully updates the value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
+  <dd class="pass">Within the first 10 seconds of loading, ctrl-alt-"a" presses the button, opening the github page. Afterward, ctrl-alt-g does so instead.</dd>
+  <dd class="pass">After the timeout, the paragraph below the button gives "<samp>g</samp>" for the value of the <code>accesskey</code>, showing that the DOM <code>accessKey</code> has been successfully updated.</dd>
+ <dt class="pass">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="pass">Within the first 10 seconds of loading, ctrl-alt-"a" presses the button. Afterward, ctrl-alt-g does so instead. The attempt to open a window is blocked by the Yandex pop-up manager, as if it were not triggered by a user action, but the button retains focus.</dd>
+  <dd class="pass">After the timeout, the paragraph below the button gives "<samp>g</samp>" for the value of the <code>accesskey</code>, showing that the DOM <code>accessKey</code> has been successfully updated.</dd>
+</dl>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<script>
+setTimeout(updateInfo,10000);
+</script>
+</body>
