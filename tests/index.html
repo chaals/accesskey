@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Accesskey tests</title>
+  <meta charset="utf-8">
+ </head>
+ <body>
+  <h1><code>accesskey</code> tests</h1>
+
+  <p>It seems that implementation of the <code>accesskey</code> element is poorly tested, at least in the last decade. I have therefore put together a series of tests to accompany my proposal to update interaction with Web Applications, which itself centres on <code>accesskey</code> as a method for resolving various problems.</p>
+  <p>All the tests provide one or more controls, and attempt to use the DOM attributes <code>accessKey</code> and <code>accessKeyLabel</code> to provide more information about the assigned shortcut. Results are recorded in the individual test pages, and roughly summarised below.</p>
+  <p>The following tests are available:</p>
+  <dl>
+   <dt><a href="accesskey-cyrillic-latin-link-manual.html">accesskey-cyrillic-latin-link-manual.html</a></dt>
+    <dd>This test uses <code>accesskey="я g"</code> to test whether browsers support the HTML5 processing model. For users whose keyboard does not generate cyrillic, but does generate latin characters, the user agent should assign an accesskey based on "g".</dd>
+    <dd>Results so far are depressing - no browser found to pass.</dd>
+   <dt><a href="accesskey-cyrillic-latin-manual.html">accesskey-cyrillic-latin-manual.html</a></dt>
+    <dd>This test uses <code>accesskey="я g"</code> to test whether browsers support the HTML5 processing model. For users whose keyboard does not generate cyrillic, but does generate latin characters, the user agent should assign an accesskey based on "g".</dd>
+    <dd>Results so far are depressing - no browser found to pass.</dd>
+   <dt><a href="accesskey-cyrillic-manual.html">accesskey-cyrillic-manual.html</a></dt>
+    <dd>This tests whether browsers usefully implement <code>accesskey</code> as specified by HTML4, relying on the user having a cyrillic keyboard to generate the character "я" as a shortcut.</dd>
+    <dd>Results so far are good - only Vivaldi browser does <em>not</em> provide a usable accesskey when the user has a cyrillic keyboard.</dd>
+   <dt><a href="accesskey-duplicate-key-manual.html">accesskey-duplicate-key.html</a></dt>
+    <dd>This tests what happens when the same value is used for the HTML <code>accesskey</code> attribute on two different elements. Neither HTML 4 nor HTML5 what should happen in this case.</dd>
+    <dd>Results so far are interesting. Firefox does something helpful, Webkit/Blink-based browsers do something stupid that doesn't violate the spec</dd>
+   <dt><a href="accesskey-two-latin-manual.html">accesskey-two-latin-manual.html</a></dt>
+    <dd>This tests a basic requirement of the HTML5 processing model, that using space-separated tokens results in <em>some</em> accesskey being assigned if possible.</dd>
+    <dd>Results so far are depressing - no browser found to pass.</dd>
+   <dt><a href="accesskey-word-manual.html">accesskey-word-manual.html</a></dt>
+    <dd>This tests what happens if the value of the HTML attribute is a word rather than single space-separated characters.</dd>
+    <dd>Results so far are depressing - no browser does anything useful.</dd>
+   <dt><a href="accesskeylabel-manual.html">accesskeylabel-manual.html</a></dt>
+    <dd>This test uses <code>accesskey="話 я g"</code> to test implementation of the HTML5 processing model - since the character "話" is not available from any normal keyboard, it should never be assigned, and one of the other characters or a fallback character of the user agent's choosing should be used instead.</dd>
+    <dd>Results so far are depressing - no browser found to pass.</dd>
+  </dl>
+
+ <p><a href="http://github.com/chaals/accesskey">This project is on github</a> including <a href="http://github.com/chaals/accesskey/tests">these tests</a>, and I welcome contributions, issues, and especially results for platforms I have not tested yet.</p>
+
+  <h2>Summary of results</h2>
+
+  <p>Testing a handful of browsers on Mac, the results suggest that the HTML5 processing model for <code>accesskey</code> is not implemented by any of them. The DOM <code>accessKey</code> attribute is reflected as required in all browsers tested so far, and Firefox has a (not very clever, and not conformant) implementation of the <code>accessKeyLabel</code>. But otherwise anything except a single character value of the HTML <code>accesskey</code> attribute does nothing useful at all.</p>
+ </body>
+</html>
