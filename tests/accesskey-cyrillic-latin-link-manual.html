@@ -37,6 +37,14 @@
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-link-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
+ <dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04 on "g"</dt>
+  <dd>(no cyrillic keyboard)</dd>
+  <dd class="pass">Firefox exposes "<samp>activation: Alt+Shift+я g</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="fail">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04 on "g"</dt>
+ <dt class="fail">Chromium 45, 64-bit Ubuntu Linux 14.04 on "g"</dt>
+ <dt class="fail">Firefox 42, 64-bit Windows 7 on "g"</dt>
+ <dt class="fail">Internet Explorer 11, 64-bit Windows 7 on "g"</dt>
+ <dt class="fail">Chrome 46, 64-bit Windows 7 on "g"</dt>
  <dt class="fail">Firefox 42, MacOS 10.10.5</dt>
  <dt class="fail">Safari 9.01, VoiceOver on MacOS 10.10.5</dt>
  <dt class="fail">Safari 9.01, MacOS 10.10.5</dt>
