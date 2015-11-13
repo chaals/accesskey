@@ -38,6 +38,34 @@
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskeylabel-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
+ <dt class="partial">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
+  <dd class="partial">The button has the text <samp>Play Github! activation: Alt+Shift+話 я g</samp></dd>
+  <dd class="partial">Orca 3.18 announces the button text ("<samp>Play Github! activation Chinese letter ya g pushbutton</samp>") when you navigate to it, but that's simply reading the button text.</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work.</dd>
+ <dt class="partial">Firefox 42, 64-bit Windows 7 with NVDA</dt>
+  <dd class="partial">The button has the text <samp>Play Github! activation: Alt+Shift+話 я g</samp></dd>
+  <dd class="partial">When navigating to button, NVDA announces "<samp>button Alt + Shift + Chinese letter</samp>" and then the button text as listed above. It does not mention the other two options.</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not work.</dd>
+ <dt class="fail">Internet Explorer 11, 64-bit Windows 7 with NVDA</dt>
+  <dd class="partial">When navigating to button, NVDA announces "<samp>button Alt + Chinese letter ya g</samp>" and then the button text "Play Github!"</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not.</dd>
+ <dt class="fail">Chrome 46, 64-bit Windows 7 with NVDA</dt>
+  <dd class="partial">When navigating to button, NVDA announces "<samp>button Alt + Chinese letter ya g</samp>" and then the button text "Play Github!"</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not.</dd>
+ <dt class="partial">Firefox 42, 64-bit Windows 7 with JAWS</dt>
+  <dd class="partial">The button has the text <samp>Play Github! activation: Alt+Shift+話 я g</samp></dd>
+  <dd class="fail">JAWS merely speaks the button text but with spaces where the 話 or я characters are.</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not work.</dd>
+ <dt class="partial">Internet Explorer 11, 64-bit Windows 7 with JAWS</dt>
+  <dd class="partial">When navigating to button, JAWS announces the button label and then "<samp>g button</samp>". It should be noted that neither the 話 or я characters were read out, even in paragraph text.</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not work.</dd>
+ <dt class="partial">Chrome 46, 64-bit Windows 7 with JAWS</dt>
+  <dd class="partial">When navigating to button, JAWS announces the button text and then "<samp>Alt + g button</samp>" with a pause where the two unspoken letters are.</dd>
+  <dd class="fail">Since I cannot generate the 話 or я characters, I cannot find out if those accesskeys work. "g" does not.</dd>
+ <dt class="partial">Safari 9.01, VoiceOver on MacOS 10.10.5</dt>
+  <dd class="partial">Voicover announces that the button "<samp>has accesskey 話 я g</samp>". Technically, this is not an <code>accessKeyLabel</code> implementation but it does a similar thing.</dd>
+  <dd class="fail">Since I cannot generate the 話 character without using IME, I cannot find out if that accesskey works. I cannot find a key combination for "я" or "g" that works</dd>
+
  <dt class="partial">Firefox 42, MacOS 10.10.5</dt>
   <dd class="partial">The button has the text <samp>Play Github! activation: ⌃⌥話 я g</samp></dd>
   <dd class="fail">Since I cannot generate the 話 character without using IME, I cannot  <dt class="partial">Safari 9.01, VoiceOver on MacOS 10.10.5</dt>
