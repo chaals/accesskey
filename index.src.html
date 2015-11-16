@@ -93,6 +93,8 @@
   <section id="why"><h2>Rationale for this extension</h2>
     <p>The <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">definition of <code>accesskey</code> in HTML5</a> is a clear improvement on the <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">HTML 4 </code>accesskey</code> definition</a>, for example allowing for multiple keys to cope with different user environments. However, there are still a number of problems:</p>
     <dl>
+      <dt>Implementation</dt>
+        <dd>Few browsers, given a value for the attribute that is larger than a single character, assign any shortcut activation at all. Few if any assign one in the case where multiple characters are used. Only Firefox implements the DOM <code>accessKeyLabel</code> attribute, and that implementation is both fragile and not according to the HTML5 specification.</dd>
       <dt>Javascript shortcuts break user expectations</dt>
         <dd>Because implementation of <code>accesskey</code> in browsers has been of poor quality, for many years the most common approach to providing shortcuts has been to use javascript to trap user Interface events. This is <em>worse</em> than the problem it attempts to resolve: 
           <ul>
@@ -232,9 +234,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
 
   <section><h4 id="processing-model-7">5.5.3 Processing model</h4>
 
-    <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a user behaviour defined by the user agent. It is derived from the presence of an <a href="#the-accesskey-attribute">accesskey</a></code> attribute, and normally takes into account content of that attribute.</p>
+    <p>An element's <dfn id="assigned-access-key">assigned shortcut</dfn>(s) are user behaviours, determined by the user agent. They are derived from the presence of an <a href="#the-accesskey-attribute">accesskey</a></code> attribute, and normally take into account the content of that attribute.</p>
 
-  <p>User agents <em class="rfc2119">must</em> maintain a list of <dfn id="possible-shortcuts">possible shortcuts</dfn>, which are input behaviour it can recognise. This can be a list of gestures, a grammar of commands, a set of key combinations, or combinations of these and any other input behaviour the user agent can recognise. This list <em class="rfc2119">should</em> be configurable by individual users.</p>
+  <p>User agents <em class="rfc2119">must</em> maintain a list of <dfn id="possible-shortcuts">possible shortcuts</dfn>, which are input behaviour it can recognise. These can be gestures, a grammar of commands, a set of key combinations, or combinations of these and any other input behaviour the user agent can recognise. This list <em class="rfc2119">should</em> be configurable by users.</p>
+
+  <p class="example">For example, by default a user agent may define the letters a-z, the cyrillic letters а-я, and the greek letters α-ω, each in combination with the "shift" and "alt" keys, as </var>possible shortcuts</var>.</p>
 
   <p>User agents <em class="rfc2119">should</em> maintain a list of <dfn id="assigned-shortcuts">currently assigned shortcuts</dfn>.</p>
 
@@ -247,35 +251,44 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
   <ol>
     <li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute, stop.</p></li>
     <li><p>If the user agent has a default interaction assigned to focus or activate the element, it <em class="rfc2119">may</em> stop processing.</p>
-      <p>For example, if the element has assigned a keyboard shortcut based on a <code>rel</code> attribute value, it is not required to assign a further shortcut.</p></li>
+      <p class="note">For example, if the element has an assigned shortcut based on a <code>rel</code> attribute value, the user agent is <em class="rfc2119">not required</em> to assign a further shortcut.</p></li>
     <li><p>If the user agent has a stored user preference for activation of the element, let <var>keys</var> be the value of that preference and skip to the <i>assign</i> step below.</p></li>
     <li><p>Otherwise, let <var>keys</var> be <samp>null</samp>, <a href="infrastructure.html#split-a-string-on-spaces" id="processing-model-7:split-a-string-on-spaces">split the attribute's value on spaces</a>, and let <var>tokens</var> be the resulting tokens.</p></li>
-    <li><p>For each value in <var>tokens</var>, in the order the tokens appeared in the
-    attribute's value, if the value corresponds to a <var>possible shortcut</var>, and does not correspond to an <var>assigned shortcut</var>, add the value to <var>keys</var> and process the next token.</p>
-      <p class="note">If the list of "possible shortcuts" includes a 26 letter latin alphabet, each in combination with the modifier keys "Control" and "Shift" and "alt", then the values "a", "adjust", and "A" <em class="rfc2119">may</em> correspond to the shortcut "ctrl-shift-alt-a", but the values "ñ", "я" and "語" do not.</p></li>
-  <li><p>If the value of <var>keys</var> is not <samp>null</samp>, assign one or more of the corresponding <var>possible shortcuts</var></p>.
-  <li><p><i>Fallback</i>: The user agent <em class="rfc2119">should</em> assign a key combination and/or other shortcut of its choosing as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-4">assigned access key</a> and then abort these steps.</p></li>
-  <li><p>If this step is reached, the element has no <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned access key</a>.</p></li></ol>
+    <li><p>Process each value in <var>tokens</var>, in the order they appeared in the
+    attribute's value, according to the following substeps:
+      <ol>
+       <li><p>if the value corresponds to a <var>possible shortcut</var>:</p>
+           <p class="note">What values <dfn id=corresponding-shortcuts">correpsond</dfn> to a <var>possible shortcut</var> is left as an implementation detail. If the <var>possible shortcuts</var> include the 26 letters of the english/latin alphabet, each in combination with the modifier keys "Control" and "Shift" and "alt", then the values "a", "adjust", and "A" <em class="rfc2119">may</em> correspond to the shortcut "ctrl-shift-alt-a". The value "ф" (a cyrillic character usually transliterated to latin as "f" <em class="rfc2119">may</em> correspond to a value of "a", since on a qwerty keyboard it corresponds to the same physical key. The token values "ñ", "ж" and "語" are unlikely to correspond to a "possible shortcut" value of "a".</p>
+         <ol>
+           <li><p>if the value corresponds to an <var>assigned shortcut</var>, the user agent <em class="rfc2119">may</em> continue processing tokens.</p> 
+               <p class="note">This enables the user agent to avoid assigning the same shortcut twice</p></li>
+           <li><p>Otherwise add the value to <var>keys</var>. The user agent <em class="rfc2119">may</em> continue processing <var>tokens</var>.</p>
+               <p class="note">This allows the user agent to assign only a single shortcut - although that is also possible through the requirements in the "assign" step.</p></li></ol></li>
+           <li><p>Otherwise, continue processing the <var>tokens</var></p></li>
+      </ol></li>
+  <li><p><i>assign</i>: If the value of <var>keys</var> is not <samp>null</samp>, assign one or more of the corresponding <var>possible shortcuts</var>.</p>
+      <p class="note">The user agent is not required to assign more than a single shortcut to a given element.</p>
+      <p class="issue">What happens if the user agent runs out of shortcuts?</p></li>
+  <li><p><i>Fallback</i>: The user agent <em class="rfc2119">should</em> assign a <var>possible shortcut</var>.</p></li>
+  <li><p>If this step is reached, the element has no <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned shortcut</a>.</p></li></ol>
 
-  <p>Once a user agent has selected and assigned an access key for an element, the user agent should
-  not change the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-6">assigned access key</a> unless the <code id="processing-model-7:the-accesskey-attribute-4"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute is changed or the element is moved to
+  <p>Once a user agent has selected and assigned a shortcut activation for an element, the user agent should
+  not change the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-6">assigned shortcut</a> unless the <code id="processing-model-7:the-accesskey-attribute-4"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute is changed or the element is moved to
   another <code id="processing-model-7:document"><a href="dom.html#document">Document</a></code>.</p>
 
-  <p>When the user triggers the shortcut behaviour corresponding to the <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned access key</a>
-  for an element, for example by pressing a shortcut key or key combination, if the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the
+  <p>When the user triggers the behaviour corresponding to the <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned shortcut</a>
+  for an element, for example by making a gesture or pressing a key combination, the
   command's <a href="semantics.html#command-facet-hiddenstate" id="processing-model-7:command-facet-hiddenstate">Hidden State</a> facet is false (visible),
   the command's <a href="semantics.html#command-facet-disabledstate" id="processing-model-7:command-facet-disabledstate">Disabled State</a> facet is also false
   (enabled), the element is <a href="infrastructure.html#in-a-document" id="processing-model-7:in-a-document">in a <code>Document</code></a> that has an associated
-  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
-  <p>Otherwise, if the element is "active" the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned accesskey.</p>
+  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned shortcut. If the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
 
   <hr>
 
   <p>The <dfn id="dom-accesskey"><code>accessKey</code></dfn> IDL attribute must
   <a href="infrastructure.html#reflect" id="processing-model-7:reflect">reflect</a> the <code id="processing-model-7:the-accesskey-attribute-6"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute.</p>
 
-  <p>The <dfn id="dom-accesskeylabel"><code>accessKeyLabel</code></dfn> IDL attribute must return
-  a string that represents the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned activation shortcut(s)</a>, if any. If the element has none, then the IDL attribute must return the empty string.</p></section></section>
+  <p>The <dfn id="dom-accesskeylabel"><code>accessKeyLabel</code></dfn> IDL attribute <em class="rfc2119">should</em> return a string that represents the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-8">assigned shortcut(s)</a>, if any. If the element has none, then the IDL attribute must return the empty string.</p></section></section>
 
     <section id="changes">
       <h2>Changes from the HTML 5 definition</h2>
