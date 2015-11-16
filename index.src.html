@@ -295,11 +295,13 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
       <p>This specification introduces a number of changes to the HTML5 definition of <code>accesskey</code>:</p>
       <ul>
         <li>It is possible to specify tokens that are longer than a single character</li>
+        <li>Authors are advised to provide a single key value, for compatibility with browsers</li>
         <li>It is valid for an author to request an accesskey without providing a proposed value</li>
-        <li>An element may have a predefined accesskey</li>
+        <li>If an element has a predefined activation, the user agent <em class="rfc2119">may</em> choose not to define a further shortcut</li>
         <li>User agents are free to define the shortcut activation as they choose<br>
-          in particular, the shortcuts are not required to be key combinations</li>
+        <li>Shortcuts are not required to be keys or key combinations</li>
         <li>An explicit request for user agents to provide discoverability</li>
+        <li>User agents <em class="rfc2119">must</em> maintain a list of <var>possible shortcuts</var></li>
       </ul>
     </section>  
     <section class='appendix' id="acknowledgements">
