@@ -167,10 +167,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
   by the user agent as a guide for creating a shortcut that activates or focuses the
   element.</p>
 
-    <p>If specified, the value must be an <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
+    <p>If specified, the value <em class="rfc2119">must</em> be a potentially empty <a href="infrastructure.html#ordered-set-of-unique-space-separated-tokens" id="the-accesskey-attribute:ordered-set-of-unique-space-separated-tokens">ordered set of unique space-separated tokens</a>
   that are <a href="infrastructure.html#case-sensitive" id="the-accesskey-attribute:case-sensitive">case-sensitive</a>.</p>
 
-    <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, for backward compatibility.</p>
+    <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, that is a single character, for backward compatibility.</p>
+    <p>At the time of writing, only Internet Explorer is known to provide any shortcut if the value is more than a single character.</p>
 
   <div class="example">
 
@@ -231,29 +232,30 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
 
   <section><h4 id="processing-model-7">5.5.3 Processing model</h4>
 
-    <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a user behaviour defined by the user agent. It is derived from the presence of an <a href="#the-accesskey-attribute">accesskey</a></code> attribute, and normallly takes into account content of that attribute.</p>
+    <p>An element's <dfn id="assigned-access-key">assigned access key</dfn> is a user behaviour defined by the user agent. It is derived from the presence of an <a href="#the-accesskey-attribute">accesskey</a></code> attribute, and normally takes into account content of that attribute.</p>
+
+  <p>User agents <em class="rfc2119">must</em> maintain a list of <dfn id="possible-shortcuts">possible shortcuts</dfn>, which are input behaviour it can recognise. This can be a list of gestures, a grammar of commands, a set of key combinations, or combinations of these and any other input behaviour the user agent can recognise. This list <em class="rfc2119">should</em> be configurable by individual users.</p>
+
+  <p>User agents <em class="rfc2119">should</em> maintain a list of <dfn id="assigned-shortcuts">currently assigned shortcuts</dfn>.</p>
 
   <p>Whenever an element's <code id="processing-model-7:the-accesskey-attribute-2"><a href="#the-accesskey-attribute">accesskey</a></code> attribute is set, changed,
   or removed, the user agent must update the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-2">assigned access key</a> by running
   the following steps:</p>
 
-  <ol><li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute, stop.
-      <li>If the user agent has a stored user preference for activation of the element, then skip
-   to the <i>fallback</i> step below.</p></li><li><p>Otherwise, <a href="infrastructure.html#split-a-string-on-spaces" id="processing-model-7:split-a-string-on-spaces">split the attribute's value on
-   spaces</a>, and let <var>keys</var> be the resulting tokens.</p></li><li>
+  <p class="note">This algorithm is intended to ensure that when shortcuts are requested a shortcut is assigned if possible. Shortcuts are assigned with user preference having higher priority than browser default behaviour, and author suggestion having lower priority. Multiple shortcuts <em class="rfc2119">may</em> be assigned, and the same shortcut <em class="rfc2119">may</em> be assigned to multiple elements.</p>
 
-    <p>For each value in <var>keys</var> in turn, in the order the tokens appeared in the
-    attribute's value, run the following substeps:</p>
-
-    <ol>
-     <li><p>If the value does not correspond to a key on the system's keyboard, then skip the remainder of these steps for this value.</p>
-         <p class="issue">The user agent probably doesn't have any information about what input methods are really available to the user. So how to select something appropriate?</p></li>
-     <li><p>If the user agent can find a mix of zero or more modifier keys that, combined with the key that corresponds to the value given in the attribute, can be used as the access key, then the user agent may assign that combination of keys as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-3">assigned access
-     key</a> and abort these steps.
-     <a href="introduction.html#fingerprinting-vector" id="processing-model-7:fingerprinting-vector" class="fingerprint"><img alt="(This is a fingerprinting vector.)" src="img/fingerprint.png" width="46" height="64"></a>
-     </p></li></ol>
-
-   </li><li><p><i>Fallback</i>: The user agent <em class="rfc2119">should</em> assign a key combination and/or other shortcut of its choosing as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-4">assigned access key</a> and then abort these steps.</p></li><li><p>If this step is reached, the element has no <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned access key</a>.</p></li></ol>
+  <ol>
+    <li><p>If the element has no <code id="processing-model-7:the-accesskey-attribute-3"><a href="#the-accesskey-attribute">accesskey</a></code> attribute, stop.</p></li>
+    <li><p>If the user agent has a default interaction assigned to focus or activate the element, it <em class="rfc2119">may</em> stop processing.</p>
+      <p>For example, if the element has assigned a keyboard shortcut based on a <code>rel</code> attribute value, it is not required to assign a further shortcut.</p></li>
+    <li><p>If the user agent has a stored user preference for activation of the element, let <var>keys</var> be the value of that preference and skip to the <i>assign</i> step below.</p></li>
+    <li><p>Otherwise, let <var>keys</var> be <samp>null</samp>, <a href="infrastructure.html#split-a-string-on-spaces" id="processing-model-7:split-a-string-on-spaces">split the attribute's value on spaces</a>, and let <var>tokens</var> be the resulting tokens.</p></li>
+    <li><p>For each value in <var>tokens</var>, in the order the tokens appeared in the
+    attribute's value, if the value corresponds to a <var>possible shortcut</var>, and does not correspond to an <var>assigned shortcut</var>, add the value to <var>keys</var> and process the next token.</p>
+      <p class="note">If the list of "possible shortcuts" includes a 26 letter latin alphabet, each in combination with the modifier keys "Control" and "Shift" and "alt", then the values "a", "adjust", and "A" <em class="rfc2119">may</em> correspond to the shortcut "ctrl-shift-alt-a", but the values "ñ", "я" and "語" do not.</p></li>
+  <li><p>If the value of <var>keys</var> is not <samp>null</samp>, assign one or more of the corresponding <var>possible shortcuts</var></p>.
+  <li><p><i>Fallback</i>: The user agent <em class="rfc2119">should</em> assign a key combination and/or other shortcut of its choosing as the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-4">assigned access key</a> and then abort these steps.</p></li>
+  <li><p>If this step is reached, the element has no <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-5">assigned access key</a>.</p></li></ol>
 
   <p>Once a user agent has selected and assigned an access key for an element, the user agent should
   not change the element's <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-6">assigned access key</a> unless the <code id="processing-model-7:the-accesskey-attribute-4"><a href="#the-accesskey-attribute">accesskey</a></code> content attribute is changed or the element is moved to
