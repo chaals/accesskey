@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKey multiple keys test</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc}
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc}
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc}
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
+  </style>
+ </head>
+ <body>
+<h1>Manual test of HTML5 <code>accesskey</code> with keys for three elements</h1>
+<p>There are three links, the first with <code>accesskey="1"</code>, the next one <code>accesskey="2"</code> and the last one <code>accesskey="3"</code>. The first link is to the github repository for this test, the second is to the rendered "github.io" base page. The last link goes to Wikipedia.</p>
+
+<h2>Expected result</h2>
+
+<p><a id="theButton" accesskey="1" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-duplicate-key-manual.html">Play Github!</a></p>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<p><a id="theOtherButton" accesskey="2" target="_blank" href="https://chaals.github.io/accesskey/tests/">See all the tests.</a></p>
+
+<p id="anotherAccesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<p><a id="theThirdButton" accesskey="3" target="_blank" href="https://en.wikipedia.org/wiki/Access_key">Access Keys</a></p>
+
+<p id="lastAccesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<h2 id="results">Results</h2>
+
+<p>Opera 12 (Presto) on 64-bit Ubuntu Linux 14.04, all three accesskeys are presented in a menu upon Shift+Esc. Arrow keys don't affect the menu, nor does the Enter key (when there is only 1 accesskey, Enter will engage the button). Typing the character listed as the accesskey invokes it.</p>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<p>This is a basic test of whether browsers implement part of the HTML5 algorithm. For users who do not have the key "available" but for whom the "g" key is "available", the shortcut should be based on "g".</p>
+
+<p>Unfortunately the HTML 5 specification does not define what "available" means. At the very least, it should be simple for the user to generate such a key, and using the HTML5 definition which requires the user agent to assign modifiers, "available" should mean it must not require any modifiers to generate the base key.</p>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  var theOtherButton = document.getElementById('theOtherButton');
+  var theThirdButton = document.getElementById('theThirdButton');
+  if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
+  }
+  if (theOtherButton.accessKeyLabel) {
+    var theOtherAccessKeyLabel = document.createElement('span');
+    theOtherAccessKeyLabel.innerHTML = " activation: " + theOtherButton.accessKeyLabel;
+    theOtherButton.appendChild(theOtherAccessKeyLabel);
+  }
+  if (theOtherButton.accessKey) {
+    var theOtherAccessKey = document.createElement('var');
+    theOtherAccessKey.innerHTML = theOtherButton.accessKey;
+    document.getElementById('anotherAccesskeyValue').appendChild(theOtherAccessKey);
+  }
+  if (theThirdButton.accessKeyLabel) {
+    var theThirdAccessKeyLabel = document.createElement('span');
+    theThirdAccessKeyLabel.innerHTML = " activation: " + theThirdButton.accessKeyLabel;
+    theThirdButton.appendChild(theThirdAccessKeyLabel);
+  }
+  if (theThirdButton.accessKey) {
+    var theThirdAccessKey = document.createElement('var');
+    theThirdAccessKey.innerHTML = theThirdButton.accessKey;
+    document.getElementById('lastAccesskeyValue').appendChild(theThirdAccessKey);
+  }
+</script>
+</body>
