@@ -34,13 +34,15 @@
 <dl>
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
   <dd class="fail">With a cyrillic keyboard, standard <code>accesskey</code> modifiers plus "я" does not do anything.</dd>
- <dt class="fail">Opera 12, 64-bit Ubuntu Linux 14.04 shows accesskey as "(null)"</dt>
+ <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
+  <dd class="fail">shows accesskey as "(null)"</dd>
+  <dd class="something">The single entry in the accesskey menu can be activated by clicking with a mouse or pressing <kbd>return</kbd></dd>
  <dt class="pass">Firefox 42, MacOS 10.10.5</dt>
   <dd class="pass">ctrl-alt-"я" presses the button, opening the github page</dd>
   <dd class="pass">Firefox exposes "<samp>^⌥я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
- <dt>Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
+ <dt class="something">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
   <dd>(no cyrillic keyboard)</dd>
-  <dd class="pass">Firefox exposes "<samp>activation: Alt+Shift+я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
+  <dd class="pass">Firefox exposes "<samp>Alt+Shift+я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
  <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
   <dd class="pass">ctrl-alt-"я" presses the button, opening the github page</dd>
  <dt class="pass">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
