@@ -22,6 +22,7 @@
 <p>There are three links, the first with <code>accesskey="1"</code>, the next one <code>accesskey="2"</code> and the last one <code>accesskey="3"</code>. The first link is to the github repository for this test, the second is to the rendered "github.io" base page. The last link goes to Wikipedia.</p>
 
 <h2>Expected result</h2>
+<p>The keys "1", "2" and "3", with relevant modifiers, open the first, second and third links. If the DOM attribute <code>accessKey</code> is supported, the Values should be listed as 1, 2, and 3 respectively. If the DOM attribute <code>accessKeyLabel</code> is supported, the links should have the text "<samp>activation: [modifiers] 1</samp>" (or <samp>2</samp>, <samp>3</samp> as appropriate) as the last part of the link content.
 
 <p><a id="theButton" accesskey="1" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-duplicate-key-manual.html">Play Github!</a></p>
 
@@ -37,7 +38,22 @@
 
 <h2 id="results">Results</h2>
 
-<p>Opera 12 (Presto) on 64-bit Ubuntu Linux 14.04, all three accesskeys are presented in a menu upon Shift+Esc. Arrow keys don't affect the menu, nor does the Enter key (when there is only 1 accesskey, Enter will engage the button). Typing the character listed as the accesskey invokes it.</p>
+<dl>
+ <dt>Opera 12 (Presto) on 64-bit Ubuntu Linux 14.04</dt>
+   <dd class="pass">all three shortcuts are presented in a menu upon Shift+Esc. Arrow keys don't affect the menu, nor does the Enter key (when there is only 1 accesskey, Enter will engage the button). Typing the character listed as the accesskey invokes it.</dd>
+   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
+   <dd>Does Opera implement <code>accessKeyLabel</code>?</dd>
+ <dt class="pass">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5</dt>
+   <dd class="something">The modifiers <kbd>ctrl-alt</kbd> with the relevant key attempts to open the links, but the pop-up blocker stops them opening as if this were not triggered by a user action. The focus is not moved to the relevant link.</dd>
+   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
+   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
+ <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
+   <dd class="pass">The modifiers <kbd>ctrl-alt</kbd> with the relevant key open the links</dd>
+   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
+   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
+ <dt class="pass">Firefox 42.0, MacOS 10.10.5</dt>
+   <dd class="pass">The DOM attributes <code>accessKey</code> and <code>accessKeyLabel</code> are supported</dd>
+</dl>
 
 <h2 id="discussion">Discussion</h2>
 <p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
