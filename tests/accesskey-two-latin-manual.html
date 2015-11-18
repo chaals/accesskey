@@ -38,22 +38,27 @@
 
 <dl>
  <dt class="fail">Firefox 42, MacOS 10.10.5</dt>
-  <dd class="something">Firefox provides "⌃⌥a g" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
- <dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
-  <dd class="something">Firefox provides "Alt+Shift+a g" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
  <dt class="fail">Firefox 42, 64-bit Windows 7</dt>
-  <dd class="something">Firefox provides "Alt+Shift+a g" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
- <dt class="fail">Opera 12, 64-bit Ubuntu Linux 14.04 shows accesskey as "("</dt>
- <dt class="pass">Internet Explorer 11, 64-bit Windows 7</dt>
-  <dd class="pass">Alt+a moves focus to the button, while Alt+g does nothing.</dd>
+ <dt class="fail">Firefox 42, Windows 7</dt>
+ <dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
+  <dd class="something">Firefox provides "Alt+Shift+a g" on Windows/Linux, "⌃⌥a g" on Mac as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
+   <dd class="fail">neither key with modifier moves focus nor activates the anchor.</dd>
  <dt class="fail">Chrome 46, 64-bit Windows 7</dt>
+ <dt class="fail">Chrome 46, Windows 7</dt>
  <dt class="fail">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04</dt>
  <dt class="fail">Chromium 45, 64-bit Ubuntu Linux 14.04</dt>
  <dt class="fail">Safari 9.01, MacOS 10.10.5</dt>
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus "a" or "g"</dd>
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
+ <dt class="pass">IE 11, Windows 7</dt>
+   <dd class="pass">Alt+Shift+a moves the focus to the anchor with the accesskey</dd>
+ <dt class="pass">Internet Explorer 11, 64-bit Windows 7</dt>
+  <dd class="pass">Alt+a moves focus to the button, while Alt+g does nothing.</dd>
+ <dt class="partial">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
+  <dd class="fail">shows accesskey as "("</dd>
+  <dd class="pass">Pressing <kbd>return</kbd> in, or clicking on the menu activates the single shortcut</dd>
 </dl>
 
 <h2 id="discussion">Discussion</h2>
