@@ -42,7 +42,6 @@
 
 <dl>
   <dt class="fail">Chrome 46.0.2490.86 m, Windows 7</dt>
-  <dt class="fail">Internet Explorer 11.0.9600.18097, Windows 7</dt>
 
   <dt class="good">Internet Explorer 11, 64-bit Windows 7</dt>
    <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
@@ -57,14 +56,16 @@
   <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
     <dd>shows accesskey as "(A) Play Github!" (but first link only)</dd>
 
- <dt class="something">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04</dt>
- <dt class="something">Chromium 45, 64-bit Ubuntu Linux 14.04</dt>
- <dt class="something">Chrome 46, 64-bit Windows 7</dt>
- <dt class="something">Safari 9.01, MacOS 10.10.5</dt>
- <dt class="something">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd class="something">Seems to apply the accesskey to the last instance.</dd>
- <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd class="fail">Vivaldi apparently does not enable an <code>accesskey</code>.</dd>
+  <dt class="something">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04</dt>
+  <dt class="something">Chromium 45, 64-bit Ubuntu Linux 14.04</dt>
+  <dt class="something">Chrome 46, 64-bit Windows 7</dt>
+  <dt class="something">Safari 9.01, MacOS 10.10.5</dt>
+  <dt class="something">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
+    <dd class="something">These browsers seem to apply the accesskey to the last instance.</dd>
+  <dt class="fail">Internet Explorer 11.0.9600.18097, Windows 7</dt>
+  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+    <dd class="fail">Vivaldi apparently does not enable an <code>accesskey</code>.</dd>
+
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
