@@ -37,30 +37,37 @@
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-latin-link-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
- <dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04 on "g"</dt>
-  <dd>(no cyrillic keyboard)</dd>
-  <dd class="pass">Firefox exposes "<samp>activation: Alt+Shift+я g</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
- <dt class="fail">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04 on "g"</dt>
- <dt class="fail">Chromium 45, 64-bit Ubuntu Linux 14.04 on "g"</dt>
- <dt class="fail">Opera 12, 64-bit Ubuntu Linux 14.04 shows accesskey as "("</dt>
- <dt class="fail">Firefox 42, 64-bit Windows 7 on "g"</dt>
- <dt class="fail">Internet Explorer 11, 64-bit Windows 7 on "g"</dt>
- <dt class="fail">Chrome 46, 64-bit Windows 7 on "g"</dt>
+ <dt class="fail">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Chromium 45, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Internet Explorer 11, 64-bit Windows 7 trying "g"</dt>
+ <dt class="fail">Chrome 46, 64-bit Windows 7 trying "g"</dt>
+  <dd class="fail">With no cyrillic keyboard, "g" with modifiers does not work</dd>
+ <dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Firefox 42, 64-bit Windows 7 trying "g"</dt>
+  <dd class="fail">With no cyrillic keyboard, "g" with modifiers does not work</dd>
+  <dd class="pass">Firefox exposes "<samp>Alt+Shift+я g</samp>" as the value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="fail">FireFox 42, Windows 7</dt>
  <dt class="fail">Firefox 42, MacOS 10.10.5</dt>
+  <dd class="pass">Firefox exposes "<samp>Alt+Shift+я g</samp>" on Windows/Linux, "<samp>^⌥я</samp>" on Mac, as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="fail">Chrome 46.0.2490.86 m, Windows 7</dt>
+ <dt class="fail">Internet Explorer 11.0.9600.18097, Windows 7</dt>
  <dt class="fail">Safari 9.01, VoiceOver on MacOS 10.10.5</dt>
  <dt class="fail">Safari 9.01, MacOS 10.10.5</dt>
  <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd>With a cyrillic keyboard set, none of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+    <dd>With a cyrillic keyboard set, none of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+ <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
+   <dd class="fail">shows accesskey as "("</dd>
+   <dd class="pass">Pressing <kbd>return</kbd> it is possible to activate the single shortcut in the menu</dd>
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
 <h2 id="discussion">Discussion</h2>
 <p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
 
-<p>The first value for <code>accesskey</code> is standard on cyrillic keyboards, so a browser that implements the HTML5 algorithm will use it as a shortcut. For users who do not have the key "available" but for whom the "g" key is "available", the shortcut should be based on "g".</p>
+<p>The first value for <code>accesskey</code> is standard on cyrillic keyboards, so a browser that implements the HTML5 algorithm will use it as a shortcut. For users who do not have the key "available" but for whom the "g" key is "available", according to HTML5 there must be a shortcut based on "g".</p>
 
-<p>Unfortunately the HTML 5 specification does not define what "available" means. At the very least, it should be simple for the user to generate such a key, and using the HTML5 definition which requires the user agent to assign modifiers, "available" should mean it must not require any modifiers to generate the base key.</p>
+<p>Unfortunately the HTML 5 specification does not define what "available" means. At the very least, it should be simple for the user to generate such a key, and using the HTML5 definition which requires the user agent to assign modifiers, "available" seems to mean it does not require any modifiers to generate the base key.</p>
 
 <script>
   var theButton = document.getElementById('theButton');
