@@ -41,18 +41,22 @@
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
- <dt class="good">Firefox 42, MacOS 10.10.5</dt>
-  <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
-  <dd class="good">Firefox provides "⌃⌥a" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
- <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04 shows accesskey as "(A) Play Github!" (but first link only)</dt>
- <dt class="good">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
-  <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
-  <dd class="good">Firefox provides "alt+shift+a" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
- <dt class="good">Firefox 42, 64-bit Windows 7</dt>
-  <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
-  <dd class="good">Firefox provides "alt+shift+a" as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
- <dt class="good">Internet Explorer 11, 64-bit Windows 7</dt>
-  <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
+  <dt class="fail">Chrome 46.0.2490.86 m, Windows 7</dt>
+  <dt class="fail">Internet Explorer 11.0.9600.18097, Windows 7</dt>
+
+  <dt class="good">Internet Explorer 11, 64-bit Windows 7</dt>
+   <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
+
+  <dt class="good">Firefox 42, MacOS 10.10.5</dt>
+  <dt class="good">Firefox 42, 64-bit Ubuntu Linux 14.04</dt>
+  <dt class="good">FireFox 42, Windows 7</dt>
+  <dt class="good">Firefox 42, 64-bit Windows 7</dt>
+    <dd class="good">Apparently moves successively focuses each element with the same <code>accesskey</code> value.</dd>
+    <dd class="good">Firefox provides "⌃⌥a" (Mac) or "alt+shift+a" (windows/linux) as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
+
+  <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
+    <dd>shows accesskey as "(A) Play Github!" (but first link only)</dd>
+
  <dt class="something">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04</dt>
  <dt class="something">Chromium 45, 64-bit Ubuntu Linux 14.04</dt>
  <dt class="something">Chrome 46, 64-bit Windows 7</dt>
