@@ -24,7 +24,7 @@
 <h2>Expected result</h2>
 <p>A strict HTML5 implementation will not make a shortcut available for the button. An HTML4 implementation may do so. The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
-<p><button id="theButton" accesskey="word" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">Play Github!</button></p>
+<p><button id="theButton" accesskey="word" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html')">Play Github!</button></p>
 
 <p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
 
@@ -39,6 +39,7 @@
  <dt class="something">Firefox 42, 64-bit Windows 7</dt>
   <dd class="something">Firefox exposes "<samp>Alt+Shift+word</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute, but it seems not to enable any shortcut.</dd>
  <dt class="fail">Opera 12, 64-bit Ubuntu Linux 14.04 shows accesskey as "(null)"</dt>
+  <dd class="something">Clicking on the accesskey with a mouse in the menu invokes the shortcut</dd>
  <dt class="something">Internet Explorer 11, 64-bit Windows 7</dt>
   <dd class="something">Presses the button with alt+w, though not with alt+o, r or d (some of these are already taken in IE to do other tasks anyway).</dd>
  <dt class="nothing">Chromium 45, 64-bit Ubuntu Linux 14.04</dt>
