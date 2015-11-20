@@ -39,23 +39,26 @@
 <h2 id="results">Results</h2>
 
 <dl>
- <dt>Opera 12 (Presto) on 64-bit Ubuntu Linux 14.04</dt>
-   <dd class="pass">all three shortcuts are presented in a menu upon Shift+Esc. Arrow keys don't affect the menu, nor does the Enter key (when there is only 1 accesskey, Enter will engage the button). Typing the character listed as the accesskey invokes it.</dd>
+ <dt class="pass">Chrome 46, Windows 7</dt>
+ <dt class="pass">Internet Explorer 11, Windows 7</dt>
+ <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
+   <dd class="pass">The standard modifiers with the relevant key open the links</dd>
+   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
+   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
+ <dt class="pass">Firefox 42.0, Windows 7</dt>
+ <dt class="pass">Firefox 42.0, MacOS 10.10.5</dt>
+   <dd class="pass">The standard modifiers with the relevant key open the links</dd>
+   <dd class="pass">The DOM attributes <code>accessKey</code> and <code>accessKeyLabel</code> are supported</dd>
+ <dt class="pass">Opera 12 (Presto) on 64-bit Ubuntu Linux 14.04</dt>
+   <dd class="pass">all three shortcuts are presented in a menu upon Shift+Esc. Arrow keys don't affect the menu, nor does the Enter key. Typing the character listed as the accesskey, or clicking on the menu entry, invokes it.</dd>
    <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
    <dd>Does Opera implement <code>accessKeyLabel</code>?</dd>
- <dt class="partial">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5</dt>
-   <dd class="something">The modifiers <kbd>ctrl-alt</kbd> with the relevant key attempts to open the links, but the pop-up blocker stops them opening as if this were not triggered by a user action. The focus is not moved to the relevant link.</dd>
-   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
-   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
- <dt class="pass">Safari 9.01, MacOS 10.10.5</dt>
-   <dd class="pass">The modifiers <kbd>ctrl-alt</kbd> with the relevant key open the links</dd>
-   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
-   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
- <dt class="pass">Firefox 42.0, MacOS 10.10.5</dt>
-   <dd class="pass">The modifiers <kbd>ctrl-alt</kbd> with the relevant key open the links</dd>
-   <dd class="pass">The DOM attributes <code>accessKey</code> and <code>accessKeyLabel</code> are supported</dd>
  <dt class="fail">Vivaldi 1.0.303.52 Beta, MacOS 10.10.5</dt>
    <dd class="fail">There is apparently no shortcut that activates the links</dd>
+   <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
+   <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
+ <dt class="partial">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5</dt>
+   <dd class="something">The modifiers <kbd>ctrl-alt</kbd> with the relevant key attempts to open the links, but the pop-up blocker stops them opening as if this were not triggered by a user action. The focus is not moved to the relevant link.</dd>
    <dd class="pass">The DOM attribute <code>accessKey</code> is supported</dd>
    <dd class="fail">The DOM attribute <code>accessKeyLabel</code> is not supported</dd>
 </dl>
