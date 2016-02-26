@@ -68,7 +68,7 @@
     <section id='sotd'>
       <p>This is a draft proposal to replace the "accesskey" section of the W3C's HTML specification. in order to . It is <a href="http://discourse.wicg.io/t/user-interaction-with-web-apps/1177/">under discussion in the Web Incubator Community Group</a> for adoption as a proposed change to the HTML specification. The topic has also been <a href="http://www.w3.org/WAI/PF/HTML/wiki/Keyboard">discussed in the HTML accessibility Task Force</a></p>
 
-      <p><a href="http://github.com/chaals/accesskey/issues">Issues for this document</a> are tracked on github, and anyone should feel welcome to raise issues there. The rpository also includes <a href="http://chaals.github.io/accesskey/tests/">test cases and result information</a>. Direct proposals for change in the form of Pull Requests are welcome, preferably with reference to an issue that explains the change, unless it is something simple like a typo.</p>
+      <p><a href="http://github.com/chaals/accesskey/issues">Issues for this document</a> are tracked on github, and anyone should feel welcome to raise issues there. The repository also includes <a href="http://chaals.github.io/accesskey/tests/">test cases and result information</a>. Direct proposals for change in the form of Pull Requests are welcome, preferably with reference to an issue that explains the change, unless it is something simple like a typo.</p>
     </section>
     
   <section id="TOC">
@@ -78,7 +78,7 @@
     <li><a href="#why">Extension rationale</a></li>
     <li><a href="#proposal">Proposed replacement of current HTML 5 specification</a><ul>
     
-        <li><a href="assigning-keyboard-shortcuts">5.5 Assigning Keyboard Shortcuts</a>
+        <li><a href="#assigning-keyboard-shortcuts">5.5 Assigning Keyboard Shortcuts</a>
         <ul>
          <li><a href="#introduction-9">5.5.1 Introduction</a></li>
          <li><a href="#the-accesskey-attribute">5.5.2 The <dfn><code>accesskey</code></dfn> attribute</a></li>
@@ -113,7 +113,7 @@
 
   <h2 id="proposal">Proposed Replacement Section 5.5:</h2>
 
-  <section><h3 id="assigning-keyboard-shortcuts">5.5 Assigning keyboard shortcuts</h3>
+  <section><h3 id="assigning-keyboard-shortcuts">5.5 Assigning activation shortcuts</h3>
 
   <section><h4 id="introduction-9">5.5.1 Introduction</h4>
 
@@ -155,9 +155,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
 
     <p>Different browsers on different platforms can show different labels, even for the same key combination.For example, if the activation shortcut is the Control key, the Shift key, and the letter C, a Windows browser might display "<samp>Ctrl+Shift+C</samp>", whereas a Mac browser might display "<samp>^⇧C</samp>", and an Emacs browser might just display "<samp>C-C</samp>". Where a voice command enabled, the value might be "<samp>^⇧C or say "compose"</samp>.</p>
 
-    <p class="issue">For gestures, it is useful to present an animation of the gesture. Can we enable this?</p>
-
     <p>It is therefore unwise to attempt to parse the value returned from the <code id="introduction-9:dom-accesskeylabel-2"><a href="#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
+
+    <p class="issue"><a href="https://github.com/chaals/accesskey/issues/16">Given a standard microsyntax for commands, accessKeyLabel would be parseable. In any event, there is currently only one implementation - is it consistent across platforms?</a></p>
+
+    <p class="issue">For gestures, it is useful to present an animation of the gesture. Can we enable this?</p>
 
   </div></section>
 
@@ -173,7 +175,7 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
   that are <a href="infrastructure.html#case-sensitive" id="the-accesskey-attribute:case-sensitive">case-sensitive</a>.</p>
 
     <p>Authors <em class="rfc2119">should</em> give a value to the accesskey attribute, that is a single character, for backward compatibility.</p>
-    <p>At the time of writing, only Internet Explorer is known to provide any shortcut if the value is more than a single character.</p>
+    <p>At the time of writing, if the value is more than a single character many browsers will not provide <strong>any</strong> shortcut, therefore <strong>reducing</strong> accessibiltiy and usability of the author's application.</p>
 
   <div class="example">
 
@@ -214,8 +216,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
    <p>In the following example, a button has possible access keys described. A script then tries to
    update the button's label to advertise the shortcut the user agent selected.</p>
 
-   <pre><code>&lt;input id="compose" type=submit accesskey="N @ 1" title="write a new email message" value="Compose"&gt;
-...
+   <pre><code>&lt;input id="compose" type=submit accesskey="N @ 1"
+  title="write a new email message" value="Compose"&gt;
+
+&lt;!-- ... --&gt;
+
 &lt;script&gt;
  function labelButton(button) {
    if (button.accessKeyLabel)
@@ -227,8 +232,6 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
      labelButton(inputs[i]);
  }
 &lt;/script&gt;</code></pre>
-
-   <p>On one user agent, the button's label might become "<samp>Compose (⌘N)</samp>". On another, it might become "<samp>Compose (Alt+⇧+1)</samp>". A voice interface, on user request for shortcuts, might state that a command is available called "compose", whose function is to "write a new email message". If the user agent doesn't assign a shortcut, it will be just "<samp>Compose</samp>". The exact string depends on what the user agent assigns as an activation shortcut, and how the user agent represents that shortcut.</p>
 
   </div></section>
 
@@ -258,7 +261,7 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
     attribute's value, according to the following substeps:
       <ol>
        <li><p>if the value corresponds to a <var>possible shortcut</var>:</p>
-           <p class="note">What values <dfn id=corresponding-shortcuts">correpsond</dfn> to a <var>possible shortcut</var> is left as an implementation detail. If the <var>possible shortcuts</var> include the 26 letters of the english/latin alphabet, each in combination with the modifier keys "Control" and "Shift" and "alt", then the values "a", "adjust", and "A" <em class="rfc2119">may</em> correspond to the shortcut "ctrl-shift-alt-a". The value "ф" (a cyrillic character usually transliterated to latin as "f" <em class="rfc2119">may</em> correspond to a value of "a", since on a qwerty keyboard it corresponds to the same physical key. The token values "ñ", "ж" and "語" are unlikely to correspond to a "possible shortcut" value of "a".</p>
+           <p class="note">What values <dfn id=corresponding-shortcuts">correspond</dfn> to a <var>possible shortcut</var> is left as an implementation detail. If the <var>possible shortcuts</var> include the 26 letters of the english/latin alphabet, each in combination with the modifier keys "Control" and "Shift" and "alt", then the values "a", "adjust", and "A" <em class="rfc2119">may</em> correspond to the shortcut "ctrl-shift-alt-a". The value "ф" (a cyrillic character usually transliterated to latin as "f" <em class="rfc2119">may</em> correspond to a value of "a", since on a qwerty keyboard it corresponds to the same physical key. The token values "ñ", "ж" and "語" are unlikely to correspond to a "possible shortcut" value of "a".</p>
          <ol>
            <li><p>if the value corresponds to an <var>assigned shortcut</var>, the user agent <em class="rfc2119">may</em> continue processing tokens.</p> 
                <p class="note">This enables the user agent to avoid assigning the same shortcut twice</p></li>
@@ -281,7 +284,11 @@ addShortcutKeyLabel(document.getElementById('c'));</code></pre>
   command's <a href="semantics.html#command-facet-hiddenstate" id="processing-model-7:command-facet-hiddenstate">Hidden State</a> facet is false (visible),
   the command's <a href="semantics.html#command-facet-disabledstate" id="processing-model-7:command-facet-disabledstate">Disabled State</a> facet is also false
   (enabled), the element is <a href="infrastructure.html#in-a-document" id="processing-model-7:in-a-document">in a <code>Document</code></a> that has an associated
-  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned shortcut. If the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, the user agent <em class="rfc2119">may</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
+  <a href="browsers.html#browsing-context" id="processing-model-7:browsing-context">browsing context</a>, and neither the element nor any of its ancestors has a <code id="processing-model-7:the-hidden-attribute"><a href="editing.html#the-hidden-attribute">hidden</a></code> attribute specified, then the user agent <em class="rfc2119">must</em> move the focus to the element with a corresponding assigned shortcut.</p> 
+
+<p>If the element <a href="semantics.html#concept-command" id="processing-model-7:concept-command">defines a command</a>, and the <a href="#assigned-access-key" id="processing-model-7:assigned-access-key-7">assigned shortcut</a> is unique to that command, the user agent <em class="rfc2119">should</em> trigger the <a href="semantics.html#command-facet-action" id="processing-model-7:command-facet-action">Action</a> of the command.</p> 
+
+<p class="issue"><a href="https://github.com/chaals/accesskey/issues/15">Issue #15 - why not <em>require</em> activation?</a></p>
 
   <hr>
 
