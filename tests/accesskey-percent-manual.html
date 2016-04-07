@@ -2,7 +2,7 @@
 <html>
  <head>
   <meta charset="utf-8">
-  <title>accessKey one latin character with spaces manual test - what happens</title>
+  <title>accesskey as % manual test - what happens</title>
   <style>
     dt {font-weight: bold}
     dt, dd {padding-top: .2em; margin-top: .2em}
@@ -18,32 +18,29 @@
   </style>
  </head>
  <body>
-<h1>Manual test of HTML5 <code>accesskey</code> using two latin characters</h1>
-<p>There is a link, with <code>accesskey=" g "</code>.</p>
+<h1>Manual test of <code>accesskey</code> using the "%" character</h1>
+<p>There is a link, with <code>accesskey="%"</code>. This character is chosen because it requires a modifier (shift) to generate it on my keyboard.</p>
 
 <h2>Expected result</h2>
-<p>There should be a shortcut based on "g". The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+<p>There should be a shortcut based on "%". The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
-<p><a id="theButton" accesskey=" g " target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">Play Github!</a></p>
+<p><a id="theButton" accesskey="%" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-percent-manual.html">Play Github!</a></p>
 
 <p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
-
-<h2 id="likely-fail">Likely failure modes</h2>
-<ul>
- <li>In browsers that implement the HTML 4 definition of <code>accesskey</code>, but not the HTML5 version, the shortcut will not work.</li>
-</ul>
 
 <h2 id="results">Results</h2>
 <p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
- <dt class="fail">Firefox 43, MacOS 10.10.5 (based on Chromium)</dt>
-   <dd class="something">Firefox provides "⌃⌥ g " on Mac as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
-   <dd class="fail">neither "g" nor space-bar with modifier moves focus nor activates the anchor.</dd>
- <dt class="fail">Vivaldi 1.0, MacOS 10.10.5 (based on Chromium)</dt>
- <dt class="fail">Opera 34.0, MacOS 10.10.5 (based on Chromium)</dt>
- <dt class="fail">Yandex browser 16.3, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus "a" or "g"</dd>
+ <dt class="something">Firefox 43, MacOS 10.10.5 (based on Chromium)</dt>
+   <dd class="pass">Firefox provides "⌃⌥%" on Mac as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
+   <dd class="something">On a keyboard where "%" corresponds to Shift-5, the standard modifiers ctrl-alt-5 activates the link.</dd>
+ <dt class="pass">Safari 9.1, MacOS 10.10.5</dt>
+ <dt class="pass">Vivaldi 1.0, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="pass">The standard modifiers plus Shift-5 (on a keyboard where that is the way to generate "%") activates the link.</dd>
+ <dt class="something">Yandex browser 16.3, MacOS 10.10.5 (based on Chromium)</dt>
+ <dt class="something">Opera 34, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="something">The standard modifiers plus Shift-5 (on a keyboard where that is the way to generate "%") activates the link, but it is then blocked as a popup, as if the request did not come from a direct user action.</dd>
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 

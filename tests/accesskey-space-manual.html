@@ -2,7 +2,7 @@
 <html>
  <head>
   <meta charset="utf-8">
-  <title>accessKey one latin character with spaces manual test - what happens</title>
+  <title>accesskey as space manual test - what happens</title>
   <style>
     dt {font-weight: bold}
     dt, dd {padding-top: .2em; margin-top: .2em}
@@ -18,19 +18,19 @@
   </style>
  </head>
  <body>
-<h1>Manual test of HTML5 <code>accesskey</code> using two latin characters</h1>
-<p>There is a link, with <code>accesskey=" g "</code>.</p>
+<h1>Manual test of HTML5 <code>accesskey</code> using space as a value</h1>
+<p>There is a link, with <code>accesskey=" "</code>.</p>
 
 <h2>Expected result</h2>
-<p>There should be a shortcut based on "g". The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+<p>There should be a shortcut based on the space bar. The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
-<p><a id="theButton" accesskey=" g " target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">Play Github!</a></p>
+<p><a id="theButton" accesskey=" " target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-two-latin-manual.html">Play Github!</a></p>
 
 <p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
 
 <h2 id="likely-fail">Likely failure modes</h2>
 <ul>
- <li>In browsers that implement the HTML 4 definition of <code>accesskey</code>, but not the HTML5 version, the shortcut will not work.</li>
+ <li>In browsers that implement the HTML 4 definition of <code>accesskey</code>, but not the HTML5 version, on an OS that uses the space character for a system shortcut, the <code>accesskey</code>-defined shortcut will not work.</li>
 </ul>
 
 <h2 id="results">Results</h2>
@@ -38,12 +38,13 @@
 
 <dl>
  <dt class="fail">Firefox 43, MacOS 10.10.5 (based on Chromium)</dt>
-   <dd class="something">Firefox provides "⌃⌥ g " on Mac as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
-   <dd class="fail">neither "g" nor space-bar with modifier moves focus nor activates the anchor.</dd>
+   <dd class="fail">Firefox provides "⌃⌥" on Mac as a value for the <code>accessKeyLabel</code> DOM attribute.</dd>
+   <dd class="fail">space-bar with modifier does not move focus nor activates the anchor - instead a system function is activated.</dd>
  <dt class="fail">Vivaldi 1.0, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Opera 34.0, MacOS 10.10.5 (based on Chromium)</dt>
  <dt class="fail">Yandex browser 16.3, MacOS 10.10.5 (based on Chromium)</dt>
-  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus "a" or "g"</dd>
+ <dt class="fail">Safari 9.1, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="fail">None of these browsers enables accesskey using their standard modifiers plus space bar, which instead activates a system function.</dd>
   <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
 </dl>
 
@@ -61,7 +62,7 @@
   }
   if (theButton.accessKey) {
     var theAccessKey = document.createElement('var');
-    theAccessKey.innerHTML = theButton.accessKey;
+    theAccessKey.innerHTML = '"' + theButton.accessKey + '"';
     document.getElementById('accesskeyValue').appendChild(theAccessKey);
   }
 </script>
