@@ -24,7 +24,7 @@
 <h2>Expected result</h2>
 <p>A shortcut based on "я" plus modifiers should fire a click on the heading, which should open a new tab or window with the github page for this test. Ideally, but not required by spec, it should be possible to "tab" to the heading.</p>
 
-<h3 id="theButton" accesskey="я" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">This heading should be focusable, and has an activation behaviour.</h3>
+<h3 id="theButton" accesskey="я" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">It should be possible to "activate" this heading, opening a new tab/window.</h3>
 
 <p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
 
@@ -35,7 +35,7 @@
  <dt class="pass">Firefox 45, MacOS 10.10.5</dt>
   <dd class="fail">It is not possible to focus the heading with the keyboard</dd>
   <dd class="pass">ctrl-alt-"я" activates the heading, opening the github page</dd>
-  <dd class="pass">Firefox exposes "<samp>^⌥я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
+  <dd class="something">Firefox exposes "<samp>^⌥я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute (<a href="https://github.com/w3c/html/issues/99">removed from HTML 5.1</a>)</dd>
  <dt class="pass">Safari 9.1, MacOS 10.10.5</dt>
  <dt class="pass">Vivaldi 1.1.453.42, MacOS 10.10.5 (based on Chromium)</dt>
   <dd class="fail">It is not possible to focus the heading with the keyboard</dd>
@@ -48,9 +48,9 @@
 </dl>
 
 <h2 id="discussion">Discussion</h2>
-<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>. An "improved" version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>, but due to <a href="index.html">lack of implementation</a> this was <a href="https://github.com/w3c/html/issues/20">reverted in HTML 5.1</a>.</p>
 
-<p>The <kbd>я</kbd> key is standard on cyrillic keyboards. A browser that implements either the HTML4 or HTML5 version of <code>accesskey</code> will use it as the base of a shortcut. <a href="https://w3c.github.io/html/interactive-elements.html#using-the-accesskey-attribute-to-define-a-command-on-other-elements">According to the specification</a>, the element must be activated.</p>
+<p>The <kbd>я</kbd> key is standard on cyrillic keyboards. A browser that implements either the HTML4 or HTML5 version of <code>accesskey</code> will use it as the base of a shortcut. <a href="https://w3c.github.io/html/interactive-elements.html#using-the-accesskey-attribute-to-define-a-command-on-other-elements">According to the specification</a>, the heading must be activated.</p>
 
 <p>Because the <kbd>я</kbd> key is not available on many common keyboards, it would be a Good Idea™ if browsers made it possible to focus the element. Otherwise for most keyboard users there is no way to activate the functionality, especially since browsers currently fail to make accesskey-activated commands discoverable.</p>
 
