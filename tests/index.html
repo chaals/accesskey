@@ -27,6 +27,10 @@
     <dd>This tests what happens when the same value is used for the HTML <code>accesskey</code> attribute on two different elements. Neither HTML 4 nor HTML5 explain what should happen in this case.</dd>
     <dd>Results so far are interesting. Firefox does something helpful, Webkit/Blink-based browsers do something that doesn't violate the spec</dd>
 
+   <dt><a href="accesskey-focus-manual.html">accesskey-focus-manual.html</a></dt>
+    <dd>This tests what happens when an <code>accesskey</code> attribute is placed on an <code>h3</code> element that has an activation behavious thanks to an <code>onclick</code> attribute. HTML5 requires that activating the assigned accesskey shortcut activates the element, or fires a click event at it, but not that it is focusable.</dd>
+    <dd>Results so far are "interesting". Browsers implement the spec requirement, but if you don't have the relevant shortcut available there is no way to focus and activate the heading using the keyboard.</dd>
+
    <dt><a href="accesskey-latin-with-spaces-manual.html">accesskey-latin-with-spaces-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 processing model, that the value of <code>accesskey</code> can be optionally surrounded by spaces.</dd>
     <dd>Results so far are depressing - no MacOS browser tested assigns an accesskey.</dd>
