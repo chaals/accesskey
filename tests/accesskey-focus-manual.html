@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKey focusability manual test - what happens</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc }
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc }
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc }
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
+  </style>
+ </head>
+ <body>
+<h1>Manual test: does <code>accesskey</code> make an element focusable?</h1>
+<p>There is a heading, with <code>accesskey="я"</code>. 
+
+<h2>Expected result</h2>
+<p>A shortcut based on "я" plus modifiers should fire a click on the heading, which should open a new tab or window with the github page for this test. Ideally, but not required by spec, it should be possible to "tab" to the heading.</p>
+
+<h3 id="theButton" accesskey="я" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html')">This heading should be focusable, and has an activation behaviour.</h3>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<h2 id="results">Results</h2>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html">test is on github</a> to enable Pull Requests…</p>
+
+<dl>
+ <dt class="pass">Firefox 45, MacOS 10.10.5</dt>
+  <dd class="fail">It is not possible to focus the heading with the keyboard</dd>
+  <dd class="pass">ctrl-alt-"я" activates the heading, opening the github page</dd>
+  <dd class="pass">Firefox exposes "<samp>^⌥я</samp>" as a value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="pass">Safari 9.1, MacOS 10.10.5</dt>
+ <dt class="pass">Vivaldi 1.1.453.42, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="fail">It is not possible to focus the heading with the keyboard</dd>
+  <dd class="pass">ctrl-alt-"я" activates the heading, opening the github page</dd>
+ <dt class="pass">Щзукф 36, MacOS 10.10.5 (based on Chromium)</dt>
+ <dt class="pass">Yandex browser 16.4, MacOS 10.10.5 (based on Chromium)</dt>
+  <dd class="pass">ctrl-alt-"я" focuses and presses the button. The attempt to open a window is blocked, as if it were not triggered by a user action, but the button retains focus.</dd>
+  <dd class="fail">It is not possible to focus the heading with the keyboard</dd>
+  <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
+</dl>
+
+<h2 id="discussion">Discussion</h2>
+<p>The <code>accesskey</code> attribute was first <a href="http://www.w3.org/TR/1998/REC-html40-19980424/interact/forms.html#adef-accesskey">defined in HTML 4</a>, and an improved version was <a href="http://www.w3.org/TR/html5/editing.html#the-accesskey-attribute">redefined in HTML5</a>
+
+<p>The <kbd>я</kbd> key is standard on cyrillic keyboards. A browser that implements either the HTML4 or HTML5 version of <code>accesskey</code> will use it as the base of a shortcut. <a href="https://w3c.github.io/html/interactive-elements.html#using-the-accesskey-attribute-to-define-a-command-on-other-elements">According to the specification</a>, the element must be activated.</p>
+
+<p>Because the <kbd>я</kbd> key is not available on many common keyboards, it would be a Good Idea™ if browsers made it possible to focus the element. Otherwise for most keyboard users there is no way to activate the functionality, especially since browsers currently fail to make accesskey-activated commands discoverable.</p>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
+  }
+</script>
+</body>
