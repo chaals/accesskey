@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>accessKey hiragana link manual test - what happens</title>
+  <style>
+    dt {font-weight: bold}
+    dt, dd {padding-top: .2em; margin-top: .2em}
+    dt.fail:before { content: "FAIL - " }
+    .fail { background-color: #fcc}
+    dt.pass:before { content: "PASS - " }
+    .pass { background-color: #cfc}
+    dt.partial:before { content: "Partial implementation - " }
+    .partial { background-color: #ffc}
+    .nothing { border: 3px red solid } 
+    .something { border: 3px gold solid } 
+    .good { border: 3px green solid }
+  </style>
+ </head>
+ <body>
+<h1>Manual test of HTML5 <code>accesskey</code> using hiragana</h1>
+<p>There is a link, with <code>accesskey="こ"</code>. There is also a hidden link with <code>accesskey="b"</code>, to a different page.</p>
+
+<h2>Expected result</h2>
+<p>For users with a hiragana keyboard, there should be a standard key based on "こ" plus modifiers that either activates or focuses the link. The link will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
+
+<p>The test: <a id="theButton" accesskey="こ" target="_blank" href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-hiragana-link-manual.html">Can you activate this link with an accesskey?</a></p>
+
+<p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
+
+<h2 id="likely-fail">Likely failure modes</h2>
+
+<p>Most users don't have a hiragana keyboard, and even japanese users <em>tend</em> to use latin characters as an input method. Even if a こ key is available, the normal modifiers used to activate <code>accesskey</code>s may map the physical key to its latin equivalent such as "b", (the physical mapping to latin on the first keyboard I tried) in which case the user will be directed to a different page. Equally, the key may not be recognised because the system is in the middle of IME composition, or the <code>accesskey</code> attribute value may not be recognised.</p>
+
+<h2 id="results">Results</h2>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-hiragana-link-manual.html">test is on github</a> to enable Pull Requests…<a href="https://chaals.github.io/testcases/fail.html" accesskey="b"></a></p>
+
+<dl>
+ <!--dt class="fail">Epiphany 3.10.3, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Chromium 45, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Internet Explorer 11, 64-bit Windows 7 trying "g"</dt>
+ <dt class="fail">Chrome 46, 64-bit Windows 7 trying "g"</dt>
+  <dd class="fail">With no cyrillic keyboard, "g" with modifiers does not work</dd-->
+ <!--dt class="fail">Firefox 42, 64-bit Ubuntu Linux 14.04 trying "g"</dt>
+ <dt class="fail">Firefox 42, 64-bit Windows 7 trying "g"</dt>
+  <dd class="fail">With no cyrillic keyboard, "g" with modifiers does not work</dd>
+  <dd class="pass">Firefox exposes "<samp>Alt+Shift+я g</samp>" as the value of the <code>accessKeyLabel</code> DOM attribute</dd>
+ <dt class="fail">FireFox 42, Windows 7</dt-->
+ <dt class="fail">Firefox 53, MacOS 10.10.5</dt>
+  <dd class="something">Firefox exposes "<samp>⌃⌥こ</samp>" on as the value of the deprecated <code>accessKeyLabel</code> DOM attribute</dd>
+  <dd class="something">The browser activates the hidden link (<code>accesskey="b"</code>) when pressing <kbd>ctrl-alt-こ</kbd></dd>
+ <dt class="fail">Yandex Browser 17.3, MacOS 10.10.5</dt>
+ <dt class="fail">Safari 10.1, MacOS 10.10.5</dt>
+  <dd class="something">The browser activates the hidden link (<code>accesskey="b"</code>) when pressing <kbd>ctrl-alt-こ</kbd></dd>
+ <!--dt class="fail">Chrome 46.0.2490.86 m, Windows 7</dt>
+ <dt class="fail">Internet Explorer 11.0.9600.18097, Windows 7</dt>
+ <dt class="fail">Safari 9.01, VoiceOver on MacOS 10.10.5</dt>
+ <dt class="fail">Safari 9.01, MacOS 10.10.5</dt>
+ <dt class="fail">Vivaldi 1.0.303.52 beta, MacOS 10.10.5 (based on Chromium)</dt>
+ <dt class="fail">Yandex browser 15.4.2272.3909 beta, MacOS 10.10.5 (based on Chromium)</dt>
+    <dd>With a cyrillic keyboard set, none of these browsers enables accesskey using their standard modifiers plus "я"</dd>
+ <dt class="something">Opera 12, 64-bit Ubuntu Linux 14.04</dt>
+   <dd class="fail">shows accesskey as "("</dd>
+   <dd class="partial">Only possible to activate shortcut menu via mouse</dd-->
+  <dt class="pass">All tested user agents reflect the content of the HTML attribute in the DOM attribute <code>accessKey</code></dd>
+</dl>
+
+<script>
+  var theButton = document.getElementById('theButton');
+  if (theButton.accessKeyLabel) {
+    var theAccessKeyLabel = document.createElement('span');
+    theAccessKeyLabel.innerHTML = " activation: " + theButton.accessKeyLabel;
+    theButton.appendChild(theAccessKeyLabel);
+  }
+  if (theButton.accessKey) {
+    var theAccessKey = document.createElement('var');
+    theAccessKey.innerHTML = theButton.accessKey;
+    document.getElementById('accesskeyValue').appendChild(theAccessKey);
+  }
+</script>
+</body>
