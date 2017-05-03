@@ -19,17 +19,20 @@
  </head>
  <body>
 <h1>Manual test of a word as an <code>accesskey</code> value</h1>
-<p>There is a button, with <code>accesskey="word"</code>. 
+<p>There is a button, with <code>accesskey="word"</code>, and a link with <code>accesskey="слово"</code>. 
 
 <h2>Expected result</h2>
 <p>A strict HTML5 implementation will not make a shortcut available for the button. An HTML4 implementation may do so. The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
 <p><button id="theButton" accesskey="word" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html')">Play Github!</button></p>
 
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html" accesskey="слово">test is on github</a> to enable Pull Requests…</p>
+
+
 <p id="accesskeyValue">Value of the accessKey DOM attribute: </p>
 
 <h2 id="results">Results</h2>
-<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-cyrillic-manual.html">test is on github</a> to enable Pull Requests…</p>
+<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html">test is on github</a> to enable Pull Requests…</p>
 
 <dl>
  <dt class="something">Firefox 42, MacOS 10.10.5</dt>
