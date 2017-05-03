@@ -71,20 +71,20 @@
   <p>There are another set of tests available, as part of <a href="https://github.com/chaals/testcases">my random testcase repository</a>.</p>
 
   <dl>
-   <dt><a href="combined-hindi-accesskey-manual.html">combined-hindi-accesskey-manual.html</a></dt>
+   <dt><a href="https://github.com/chaals/testcases/combined-hindi-accesskey-manual.html">combined-hindi-accesskey-manual.html</a></dt>
     <dd>This tests what happens when a Devanagari character that represents more than one code point is used, as in <code>accesskey="क्ष"</code> where the character represents 3 distinct code points - as shown if you copy it and then try to delete it with backspace.</dd>
     <dd>Some browsers on Mac and Windows recognise the accesskey, with an appropriate keyboard, others don't.</dd>
 
-   <dt><a href="combining-accesskey-manual.html">combining-accesskey-manual.html</a></dt>
+   <dt><a href="https://github.com/chaals/testcases/combining-accesskey-manual.html">combining-accesskey-manual.html</a></dt>
     <dd>This tests what happens when using the values <code>accesskey="ç"</code>, <code>accesskey="&amp;#110;&amp;#771;"</code> ("&#110;&#771;"), <code>accesskey="n"</code> to compare with the previous one, and <code>accesskey="&#x0041;"</code> ("A").</dd>
     <dd>No browsers on Mac and Windows recognise the accesskey "&amp;#110;&amp;#771;", the others work as expected.</dd>
   </dl>
 
-   <dt><a href="combining-case-accesskey-manual.html">combining-case-accesskey-manual.html</a></dt>
+   <dt><a href="https://github.com/chaals/testcases/combining-case-accesskey-manual.html">combining-case-accesskey-manual.html</a></dt>
     <dd>This tests what happens when using the values <code>accesskey="&amp;#x0041;"</code> ("&amp;#x0041;"), <code>accesskey="&amp;#x0061;"</code> ("&#x0061;"),  <code>accesskey="&amp;#x0061;"</code> ("&#x0061;"),  <code>accesskey="&amp;#x0041;"</code> ("&#x0041;"), and  <code>accesskey="&amp;#x0062;"</code> ("&#x0062;").</dd>
     <dd>Tested on Mac only. Firefox applies a sequential focus, cycling through the first four, if the A is used as an accesskey without the shift key. <kbd>shift-ctrl-alt-A</kbd> has no effect. In blink/webkit browsers, <kbd>shift-ctrl-alt-a</kbd> and <kbd>ctrl-alt-a</kbd> both activate the fourth link directly. The "b" link works as expected in all browsers.</dd>
 
-   <dt><a href="combining-case-greek-accesskey-manual.html">combining-case-greek-accesskey-manual.html</a></dt>
+   <dt><a href="https://github.com/chaals/testcases/combining-case-greek-accesskey-manual.html">combining-case-greek-accesskey-manual.html</a></dt>
     <dd>This tests what happens when using the values <code>accesskey="&amp;#x0391;"</code> ("&amp;#x0391;"), <code>accesskey="&amp;#x03b1;"</code> ("&#x03b1;"),  <code>accesskey="&amp;#x03b1;"</code> ("&#x03b1;"),  <code>accesskey="&amp;#x0391;"</code> ("&#x0391;"), and  <code>accesskey="&amp;#x03β2;"</code> ("&#x03β2;").</dd>
     <dd>Tested on Mac only. Firefox applies a sequential focus, cycling through the first four, if the α is used as an accesskey without the shift key. <kbd>shift-ctrl-alt-α</kbd> has no effect. In blink browsers, <kbd>shift-ctrl-alt-α</kbd> and <kbd>ctrl-alt-α</kbd> both activate the fourth link directly, while in webkit <kbd>ctrl-alt-α</kbd> activates the third link and <kbd>shift-ctrl-alt-α</kbd> activates the fourth link. The "β" link works as expected in all browsers.</dd>
   </dl>
