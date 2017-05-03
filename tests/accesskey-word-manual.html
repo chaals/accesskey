@@ -19,14 +19,16 @@
  </head>
  <body>
 <h1>Manual test of a word as an <code>accesskey</code> value</h1>
-<p>There is a button, with <code>accesskey="word"</code>, and a link with <code>accesskey="слово"</code>. 
+<p>There is a button, with <code>accesskey="word"</code>, and links with <code>accesskey="слово"</code> and <code>accesskey="この"</code>. 
 
 <h2>Expected result</h2>
 <p>A strict HTML5 implementation will not make a shortcut available for the button. An HTML4 implementation may do so. The button will try to open a window with the Github repo for this test, so you can update the <a href="#results">results section</a> :)</p>
 
 <p><button id="theButton" accesskey="word" onclick="window.open('https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html')">Play Github!</button></p>
 
-<p>This <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html" accesskey="слово" id="theLink">test is on github</a> to enable Pull Requests…</p>
+<p>Try a cyrillic: <code>accesskey="слово"</code>. The <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html" accesskey="слово" id="theLink1">test is on github</a> to enable Pull Requests…</p>
+
+<p>Try a hiragana keyboard: <code>accesskey="この"</code>. The <a href="https://github.com/chaals/accesskey/blob/gh-pages/tests/accesskey-word-manual.html" accesskey="слово" id="theLink1">test is on github</a> to enable Pull Requests…　And I doubt this works at all on Mac, <strong>maybe</strong> it does something on Edge…</p>
 
 
 <p id="buttonaccesskeyValue">Value of the button's accessKey DOM attribute: </p>
