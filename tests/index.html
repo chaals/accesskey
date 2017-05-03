@@ -13,11 +13,11 @@
   <dl>
    <dt><a href="accesskey-cyrillic-latin-link-manual.html">accesskey-cyrillic-latin-link-manual.html</a></dt>
     <dd>This test uses <code>accesskey="я g"</code> to test whether browsers support the HTML5 processing model. For users whose keyboard does not generate cyrillic, but does generate latin characters, the user agent should assign an accesskey based on "g".</dd>
-    <dd>Results so far are depressing - no browser found to pass.</dd>
+    <dd>Except in IE/Edge, browser don't make any accesskey available.</dd>
 
    <dt><a href="accesskey-cyrillic-latin-manual.html">accesskey-cyrillic-latin-manual.html</a></dt>
     <dd>This test uses <code>accesskey="я g"</code> to test whether browsers support the HTML5 processing model. For users whose keyboard does not generate cyrillic, but does generate latin characters, the user agent should assign an accesskey based on "g".</dd>
-    <dd>Results so far are depressing - no browser found to pass.</dd>
+    <dd>Except in IE/Edge, browser don't make any accesskey available.</dd>
 
    <dt><a href="accesskey-cyrillic-manual.html">accesskey-cyrillic-manual.html</a></dt>
     <dd>This tests whether browsers usefully implement <code>accesskey</code> as specified by HTML4, relying on the user having a cyrillic keyboard to generate the character "я" as a shortcut.</dd>
@@ -25,43 +25,68 @@
 
    <dt><a href="accesskey-duplicate-key-manual.html">accesskey-duplicate-key-manual.html</a></dt>
     <dd>This tests what happens when the same value is used for the HTML <code>accesskey</code> attribute on two different elements. Neither HTML 4 nor HTML5 explain what should happen in this case.</dd>
-    <dd>Results so far are interesting. Firefox does something helpful, Webkit/Blink-based browsers do something that doesn't violate the spec</dd>
+    <dd>IE, Edge and Firefox move the focus sequentially to each item with the same accesskey, Webkit/Blink-based browsers activate the last item in source order</dd>
 
    <dt><a href="accesskey-focus-manual.html">accesskey-focus-manual.html</a></dt>
-    <dd>This tests what happens when an <code>accesskey</code> attribute is placed on an <code>h3</code> element that has an activation behavious thanks to an <code>onclick</code> attribute. HTML5 requires that activating the assigned accesskey shortcut activates the element, or fires a click event at it, but not that it is focusable.</dd>
+    <dd>This tests what happens when an <code>accesskey</code> attribute is placed on an <code>h3</code> element that has an activation behaviour thanks to an <code>onclick</code> attribute. HTML5 requires that activating the assigned accesskey shortcut activates the element, or fires a click event at it, but not that it is focusable.</dd>
     <dd>Results so far are "interesting". Browsers implement the spec requirement, but if you don't have the relevant shortcut available there is no way to focus and activate the heading using the keyboard.</dd>
+
+   <dt><a href="accesskey-hiragana-manual.html">accesskey-hiragana-manual.html</a></dt>
+    <dd>This tests what happens with <code>accesskey="こ"</code>, and a hidden link that has <code>accesskey="b"</code>.　This is a difficult test: Most users in Japanese use the latin-based romaji input method, and keyboards run composition mode automatically.</dd>
+    <dd>Results on Mac browsers are that the "b" accesskey is triggered.</dd>
 
    <dt><a href="accesskey-latin-with-spaces-manual.html">accesskey-latin-with-spaces-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 processing model, that the value of <code>accesskey</code> can be optionally surrounded by spaces.</dd>
-    <dd>Results so far are depressing - no MacOS browser tested assigns an accesskey.</dd>
+    <dd>Only IE/Edge assign an accesskey.</dd>
 
    <dt><a href="accesskey-multiple-keys.html">accesskey-multiple-keys.html</a></dt>
     <dd>This tests what happens when there are three elements with <code>accesskey</code> attributes valid for HTML 4 and HTML5.</dd>
     <dd>Results so far are good. Many browsers pass this test, although Yandex' implementation is hard to use because the popup blocker is triggered.</dd>
 
+   <dt><a href="accesskey-percent-manual.html">accesskey-percent-manual.html</a></dt>
+    <dd>This tests a basic requirement, that the value of <code>accesskey</code> can be a punctuation character which normally requires a modifier key to generate.</dd>
+    <dd>Results so far are good - all MacOS browsers tested assign an accesskey. Firefox' behaviour is unusual in that it assigns an accesskey based on the key that generates the character, without using modifier.</dd>
+
    <dt><a href="accesskey-reflected-manual.html">accesskey-reflected-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 definition, that the DOM <code>accessKey</code> reflect the HTML attribute, so any changes to its value are also made to the DOM attribute.</dd>
     <dd>Results so far are good - all browsers tested do reflect the attribute.</dd>
+
+   <dt><a href="accesskey-space-manual.html">accesskey-space-manual.html</a></dt>
+    <dd>This tests what happens with <code>accesskey=" "</code>.</dd>
+    <dd>Preliminary results: no MacOS browser enables the accesskey to be triggered.</dd>
 
    <dt><a href="accesskey-two-latin-manual.html">accesskey-two-latin-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 processing model, that using space-separated tokens results in <em>some</em> accesskey being assigned if possible.</dd>
     <dd>Results so far are depressing - except IE, no browser assigns an accesskey.</dd>
 
-   <dt><a href="accesskey-percent-manual.html">accesskey-percent-manual.html</a></dt>
-    <dd>This tests a basic requirement, that the value of <code>accesskey</code> can be a punctuation character which normally requires a modifier key to generate.</dd>
-    <dd>Results so far are good - all MacOS browsers tested assign an accesskey. Firefox' behaviour is unusual in that it assigns an accesskey based on the key that generates the character, without using modifier.</dd>
-
-   <dt><a href="accesskey-space-manual.html">accesskey-space-manual.html</a></dt>
-    <dd>This tests what happens when the value of <code>accesskey</code> is a space character.</dd>
-    <dd>Results so far are depressing - no MacOS browser tested assigns an accesskey, and instead a system function is activated.</dd>
-
    <dt><a href="accesskey-word-manual.html">accesskey-word-manual.html</a></dt>
     <dd>This tests what happens if the value of the HTML attribute is a word rather than single space-separated characters.</dd>
-    <dd>Results so far are depressing - except IE, no browser assigns an accesskey.</dd>
+    <dd>Only IE/Edge assign an accesskey, which is the first letter of the word.</dd>
 
    <dt><a href="accesskeylabel-manual.html">accesskeylabel-manual.html</a></dt>
     <dd>This test uses <code>accesskey="話 я g"</code> to test implementation of the HTML5 processing model - since the character "話" is not available from any normal keyboard, it should never be assigned, and one of the other characters or a fallback character of the user agent's choosing should be used instead.</dd>
-    <dd>Results so far are depressing - no browser found to pass.</dd>
+    <dd>No browser found to pass.</dd>
+  </dl>
+
+  <p>There are another set of tests available, as part of <a href="https://github.com/chaals/testcases">my random testcase repository</a>.</p>
+
+  <dl>
+   <dt><a href="combined-hindi-accesskey-manual.html">combined-hindi-accesskey-manual.html</a></dt>
+    <dd>This tests what happens when a Devanagari character that represents more than one code point is used, as in <code>accesskey="क्ष"</code> where the character represents 3 distinct code points - as shown if you copy it and then try to delete it with backspace.</dd>
+    <dd>Some browsers on Mac and Windows recognise the accesskey, with an appropriate keyboard, others don't.</dd>
+
+   <dt><a href="combining-accesskey-manual.html">combining-accesskey-manual.html</a></dt>
+    <dd>This tests what happens when using the values <code>accesskey="ç"</code>, <code>accesskey="&amp;#110;&amp;#771;"</code> ("&#110;&#771;"), <code>accesskey="n"</code> to compare with the previous one, and <code>accesskey="&#x0041;"</code> ("A").</dd>
+    <dd>No browsers on Mac and Windows recognise the accesskey "&amp;#110;&amp;#771;", the others work as expected.</dd>
+  </dl>
+
+   <dt><a href="combining-case-accesskey-manual.html">combining-case-accesskey-manual.html</a></dt>
+    <dd>This tests what happens when using the values <code>accesskey="&amp;#x0041;"</code> ("&amp;#x0041;"), <code>accesskey="&amp;#x0061;"</code> ("&#x0061;"),  <code>accesskey="&amp;#x0061;"</code> ("&#x0061;"),  <code>accesskey="&amp;#x0041;"</code> ("&#x0041;"), and  <code>accesskey="&amp;#x0062;"</code> ("&#x0062;").</dd>
+    <dd>Tested on Mac only. Firefox applies a sequential focus, cycling through the first four, if the A is used as an accesskey without the shift key. <kbd>shift-ctrl-alt-A</kbd> has no effect. In blink/webkit browsers, <kbd>shift-ctrl-alt-a</kbd> and <kbd>ctrl-alt-a</kbd> both activate the fourth link directly. The "b" link works as expected in all browsers.</dd>
+
+   <dt><a href="combining-case-greek-accesskey-manual.html">combining-case-greek-accesskey-manual.html</a></dt>
+    <dd>This tests what happens when using the values <code>accesskey="&amp;#x0391;"</code> ("&amp;#x0391;"), <code>accesskey="&amp;#x03b1;"</code> ("&#x03b1;"),  <code>accesskey="&amp;#x03b1;"</code> ("&#x03b1;"),  <code>accesskey="&amp;#x0391;"</code> ("&#x0391;"), and  <code>accesskey="&amp;#x03β2;"</code> ("&#x03β2;").</dd>
+    <dd>Tested on Mac only. Firefox applies a sequential focus, cycling through the first four, if the α is used as an accesskey without the shift key. <kbd>shift-ctrl-alt-α</kbd> has no effect. In blink browsers, <kbd>shift-ctrl-alt-α</kbd> and <kbd>ctrl-alt-α</kbd> both activate the fourth link directly, while in webkit <kbd>ctrl-alt-α</kbd> activates the third link and <kbd>shift-ctrl-alt-α</kbd> activates the fourth link. The "β" link works as expected in all browsers.</dd>
   </dl>
 
  <p><a href="http://github.com/chaals/accesskey">This project is on github</a> including <a href="http://github.com/chaals/accesskey/tests">these tests</a>, and I welcome contributions, issues, and especially results for platforms I have not tested yet.</p>
