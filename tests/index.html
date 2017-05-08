@@ -45,7 +45,7 @@
 
    <dt><a href="accesskey-percent-manual.html">accesskey-percent-manual.html</a></dt>
     <dd>This tests a basic requirement, that the value of <code>accesskey</code> can be a punctuation character which normally requires a modifier key to generate.</dd>
-    <dd>Results so far are good - all MacOS browsers tested assign an accesskey. Firefox' behaviour is unusual in that it assigns an accesskey based on the key that generates the character, without using modifier.</dd>
+    <dd>Results so far are good - all browsers tested assign an accesskey. Firefox' behaviour is unusual in that it assigns an accesskey based on the "5" key that generates the character, without using modifier. IE focuses the link rather than activate it.</dd>
 
    <dt><a href="accesskey-reflected-manual.html">accesskey-reflected-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 definition, that the DOM <code>accessKey</code> reflect the HTML attribute, so any changes to its value are also made to the DOM attribute.</dd>
@@ -53,7 +53,7 @@
 
    <dt><a href="accesskey-space-manual.html">accesskey-space-manual.html</a></dt>
     <dd>This tests what happens with <code>accesskey=" "</code>.</dd>
-    <dd>Preliminary results: no MacOS browser enables the accesskey to be triggered.</dd>
+    <dd>No MacOS browser enables the accesskey to be triggered. Edge on Windows activates the link, but a pop-up warning is triggered. IE focuses the link. Firefox and Yandex on windows open the window menu - the default system action.</dd>
 
    <dt><a href="accesskey-two-latin-manual.html">accesskey-two-latin-manual.html</a></dt>
     <dd>This tests a basic requirement of the HTML5 processing model, that using space-separated tokens results in <em>some</em> accesskey being assigned if possible.</dd>
